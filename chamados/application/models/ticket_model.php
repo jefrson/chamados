@@ -20,4 +20,5 @@ class Ticket_model extends CI_Model{
     function alterar($dt){
         return $this->db->update('ticket', $dt);
     }
+    
 }

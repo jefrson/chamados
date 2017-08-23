@@ -1,8 +1,9 @@
-<?php $this->load->view('./cabecalho') ?>
+<?php $this->load->view('./cabecalho'); ?>
+
 <div class="header">
-    <h1>Andamento</h1>
+    <h1>Alteração de Andamento</h1>
 </div>
-<div class="cad_andamento">
+<div class="alt_andamento">
     <form action="<?php echo site_url('andamento/adicionarAndamento'); ?>" method="post">
         <label>
             Ticket:
@@ -31,4 +32,5 @@
         <button type="reset">Limpar</button>
     </form>
 </div>
-<?php $this->load->view('./rodape') ?>
+
+<?php $this->load->view('./rodape'); ?>

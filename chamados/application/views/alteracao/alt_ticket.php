@@ -1,8 +1,9 @@
-<?php $this->load->view('./cabecalho') ?>
+<?php $this->load->view('./cabecalho'); ?>
+
 <div class="header">
-    <h1>Ticket</h1>
+    <h1>Alteração de Ticket</h1>
 </div>
-<div class="cad_ticket">
+<div class="alt_ticket">
     <form action="<?php echo site_url('ticket/adicionarTicket'); ?>" method="post">
         <label>
             Ativo:
@@ -73,8 +74,9 @@
             <input type="file" name="anexo">
         </label>
         <br>
-        <button type="submit">Adicionar</button>
-        <button type="reset">Limpar</button>
+        <button type="submit">Alterar</button>
+        <button type="reset">Cancelar</button>
     </form>
 </div>
-<?php $this->load->view('./rodape') ?>
+
+<?php $this->load->view('./rodape'); ?>

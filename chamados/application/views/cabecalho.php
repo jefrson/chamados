@@ -25,5 +25,13 @@
                         <li><a href="<?php echo site_url('welcome/listarAndamento'); ?>">Andamento</a></li>
                     </ul>
                 </li>
+                <li>
+                    Alteração
+                    <ul>
+                        <li><a href="<?php echo site_url('welcome/alterarUsuario'); ?>">Usuários</a></li>
+                        <li><a href="<?php echo site_url('welcome/alterarTicket'); ?>">Tickets</a></li>
+                        <li><a href="<?php echo site_url('welcome/alterarAndamento'); ?>">Andamento</a></li>
+                    </ul>
+                </li>
             </ul>
         </div>

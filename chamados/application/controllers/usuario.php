@@ -29,6 +29,10 @@ class Usuario extends CI_Controller{
     function alterarUsuario(){
         $this->load->model('usuario_model');
         
+        $id = $this->input->post('id_usuario');
+        
+        $r = $this->usuario_model->selecionar($id);
+       
         $dt = array(
             'nome' => $this->input->post('nome'),
             'id_setor' => $this->input->post('id_setor'),

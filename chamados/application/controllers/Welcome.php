@@ -31,4 +31,16 @@ class Welcome extends CI_Controller {
     function listarAndamento(){
         $this->load->view('listagem/list_andamento');
     }
+    
+    function alterarUsuario(){
+        $this->load->view('alteracao/alt_usuario');
+    }
+    
+    function alterarTicket(){
+        $this->load->view('alteracao/alt_ticket');
+    }
+    
+    function alterarAndamento(){
+        $this->load->view('alteracao/alt_andamento');
+    }
 }

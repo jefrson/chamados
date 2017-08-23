@@ -16,4 +16,8 @@ class Usuario_model extends CI_Model {
     function alterar($dt){
         return $this->db->update('usuario', $dt);
     }
+    
+    function selecionar($i){
+        return $this->db->get_where('usuario',$i);
+    }
 }
