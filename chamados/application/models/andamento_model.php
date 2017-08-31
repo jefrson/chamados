@@ -18,6 +18,7 @@ class Andamento_model extends CI_Model{
     }
     
     function alterar($dt){
+        $this->db->where('id_ticket', $dt['id_ticket']);
         return $this->db->update('andamento', $dt);
     }
     

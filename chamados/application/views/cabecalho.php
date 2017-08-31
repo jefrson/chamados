@@ -7,6 +7,7 @@
     </head>
     <body>
         <header>
+            <h6><?php echo "Logado em: ".$_SESSION['nome']; ?></h6>
         <div id="menu">
             <ul>
                 <li>
@@ -28,7 +29,8 @@
                 <li>
                     Alteração
                     <ul>
-                        <li><a href="<?php echo site_url('welcome/alterarUsuario'); ?>">Usuários</a></li>
+                        <li><a href="<?php echo site_url('welcome/alterarUsuario'); ?>">Suas Informações</a></li>
+                        <li><a href="<?php echo site_url('welcome/alterarUsuarios'); ?>">Usuários</a></li>
                         <li><a href="<?php echo site_url('welcome/alterarTicket'); ?>">Tickets</a></li>
                         <li><a href="<?php echo site_url('welcome/alterarAndamento'); ?>">Andamento</a></li>
                     </ul>

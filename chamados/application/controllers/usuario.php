@@ -42,14 +42,20 @@ class Usuario extends CI_Controller{
     
     function buscarUsuario(){
         
-        $id = $this->db->post('nome');
+        $id = $this->input->post('nome');
         
         $r = $this->usuario_model->selecionar($id);
         
-        $this->load->view('alteracao/alt_usuario', $r);
+        $v = array(
+            'usuario' => $r
+        );
+        
+        $this->load->view('alteracao/alt_usuarios', $v);
     }
     
     function alterarUsuario(){     
+        $nivel = $this->input->post('nivel');
+        $cpf = $this->input->post('cpf');
         
         $dt = array(
             'id_usuario' => $this->session->id_usuario,
@@ -58,8 +64,10 @@ class Usuario extends CI_Controller{
             'id_cargo' => $this->input->post('id_cargo'),
             'id_secretaria' => $this->input->post('id_secretaria'),
             'matricula' => $this->input->post('matricula'),
-            'cpf' => $this->input->post('cpf'),
-            'email' => $this->input->post('email')
+            'cpf' => $cpf,
+            'email' => $this->input->post('email'),
+            'nivel' => isset($nivel)?TRUE:FALSE,
+            'senha' => md5($cpf)
         );
         
         $alt = $this->usuario_model->alterar($dt);

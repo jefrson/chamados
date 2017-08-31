@@ -3,21 +3,12 @@
 <div class="header">
     <h1>Alteração de Usuário</h1>
 </div>
-<div class="buscar" hidden="hidden">
-    <form action="<?php echo site_url('usuario/buscarUsuario'); ?>" method="post">
-        <label>
-            Buscar por Usuário:
-            <input type="text" name="nome">
-        </label>
-        <button type="submit">Buscar</button>
-    </form>
-</div>
 <div class="alt_usuario">
-    <?php if($_SESSION['nome']): ?>
+    <?php $id = $this->session->id_usuario;
+        $users = $this->usuario_model->selecionar($id);
+    ?>
+    <?php if($users): ?>
     <form action="<?php echo site_url('usuario/alterarUsuario'); ?>" method="post" class="">
-        <?php $id = $this->session->id_usuario;
-              $users = $this->usuario_model->selecionar($id);
-        ?>
         <?php foreach ($users as $us ): ?>        
         <label>
             Nome:

@@ -36,6 +36,10 @@ class Welcome extends CI_Controller {
         $this->load->view('alteracao/alt_usuario');
     }
     
+    function alterarUsuarios(){
+        $this->load->view('alteracao/buscar_usuario');
+    }
+            
     function alterarTicket(){
         $this->load->view('alteracao/alt_ticket');
     }

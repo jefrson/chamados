@@ -80,7 +80,7 @@ class Ticket extends CI_Controller{
     }
     
     private function validar(){
-        $this->form_validation->set_rules('responsavel','Responsável','trim|required|alpha|');
+        $this->form_validation->set_rules('responsavel','Responsável','trim|required|alpha');
         $this->form_validation->set_rules('mensagem','Mensagem','trim|required');
         $this->form_validation->set_rules('assunto','Assunto','trim|required');
         $this->form_validation->set_rules('data_inicial','Data Inicial','trim|required');

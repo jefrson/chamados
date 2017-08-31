@@ -19,6 +19,6 @@ class Usuario_model extends CI_Model {
     }
     
     function selecionar($i){
-        return $this->db->get_where('usuario',array('id_usuario' => $i))->result();
+        return $this->db->get_where('usuario',array('nome' => $i))->result();
     }
 }

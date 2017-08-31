@@ -50,7 +50,7 @@
         <br>
         <label>
             Responsável:
-            <input type="text" name="responsavel" value="<?php echo set_value('responsavel'); ?>"><?php echo form_error('responsavel'); ?>
+            <input type="text" name="responsavel" value="<?php echo form_error('responsavel')?set_value('responsavel'):''; ?>"><?php echo form_error('responsavel'); ?>
         </label>
         <br>
         <label>
@@ -65,12 +65,12 @@
         <br>
         <label>
             Assunto:
-            <textarea name="assunto" rows="1" value="<?php echo set_value('assunto'); ?>"></textarea><?php echo form_error('assunto'); ?>
+            <textarea name="assunto" rows="1"><?php echo form_error('assunto')?set_value('assunto'):''; ?></textarea><?php echo form_error('assunto'); ?>
         </label>
         <br>
         <label>
             Mensagem:
-            <textarea name="mensagem" value="<?php echo set_value('mensagem'); ?>"></textarea><?php echo form_error('mensagem'); ?>
+            <textarea name="mensagem"><?php echo form_error('mensagem')?set_value('mensagem'):''; ?></textarea><?php echo form_error('mensagem'); ?>
         </label>
         <br>
         <label>
