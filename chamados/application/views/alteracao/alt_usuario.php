@@ -4,12 +4,17 @@
     <h1>Alteração de Usuário</h1>
 </div>
 <div class="alt_usuario">
-    <?php $id = $this->session->id_usuario;
+    <?php $id = $this->session->nome;
         $users = $this->usuario_model->selecionar($id);
     ?>
     <?php if($users): ?>
     <form action="<?php echo site_url('usuario/alterarUsuario'); ?>" method="post" class="">
         <?php foreach ($users as $us ): ?>        
+        <label>
+            ID:
+            <input type="text" name="id" value="<?php echo $this->session->id_usuario; ?>" readonly>
+        </label>
+        <br>
         <label>
             Nome:
             <input type="text" name="nome" maxlength="30" value="<?php echo $us->nome; ?>">

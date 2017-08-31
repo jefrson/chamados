@@ -13,7 +13,9 @@
                 <li>
                     Cadastros
                     <ul>
-                        <li><a href="<?php echo site_url('welcome/cadUsuario'); ?>">Usuários</a></li>
+                        <?php if($this->session->nivel == FALSE): ?>
+                            <li><a href="<?php echo site_url('welcome/cadUsuario'); ?>">Usuários</a></li>
+                        <?php endif; ?>
                         <li><a href="<?php echo site_url('welcome/cadTicket'); ?>">Tickets</a></li>
                         <li><a href="<?php echo site_url('welcome/cadAndamento'); ?>">Andamento</a></li>
                     </ul>
@@ -30,7 +32,9 @@
                     Alteração
                     <ul>
                         <li><a href="<?php echo site_url('welcome/alterarUsuario'); ?>">Suas Informações</a></li>
-                        <li><a href="<?php echo site_url('welcome/alterarUsuarios'); ?>">Usuários</a></li>
+                        <?php if($this->session->nivel == FALSE):?>
+                            <li><a href="<?php echo site_url('welcome/alterarUsuarios'); ?>">Usuários</a></li>
+                        <?php endif; ?>
                         <li><a href="<?php echo site_url('welcome/alterarTicket'); ?>">Tickets</a></li>
                         <li><a href="<?php echo site_url('welcome/alterarAndamento'); ?>">Andamento</a></li>
                     </ul>

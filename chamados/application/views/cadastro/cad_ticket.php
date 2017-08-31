@@ -11,8 +11,7 @@
         <br>
         <label>
             Solicitante:
-            <?php $nome = $_SESSION['nome']; ?>
-            <input type="text" name="solicitante" disabled="disabled" value="<?php echo $nome; ?>">
+            <input type="text" name="solicitante" disabled="disabled" value="<?php echo $this->session->nome; ?>">
             
             <!--Esta parte exibe um Combobox de usuários
             <?php //$this->load->model('ticket_model'); ?>
