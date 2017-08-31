@@ -108,7 +108,7 @@ class Usuario extends CI_Controller{
         $this->form_validation->set_rules('id_cargo','Cargo','trim|required|numeric');
         $this->form_validation->set_rules('id_secretaria','Secretaria','trim|required|numeric');
         $this->form_validation->set_rules('matricula','Matricula','trim|required|numeric');
-        $this->form_validation->set_rules('cpf','CPF','trim|required|numeric|validar_cpf');
+        $this->form_validation->set_rules('cpf','CPF','trim|required|numeric');
         $this->form_validation->set_rules('email','E-mail','trim|required|valid_email');
         
         //Define a mensagem de Erro a ser exibida

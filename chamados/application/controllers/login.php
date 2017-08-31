@@ -29,7 +29,6 @@ class Login extends CI_Controller{
             $this->load->view('cadastro/cad_ticket');
         }else{
             $this->load->view('login/login');
-            echo heading('Não logou!',1);
         }
     }
     
