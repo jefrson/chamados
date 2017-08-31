@@ -34,15 +34,25 @@ class Andamento extends CI_Controller{
     }
 
     function alterarAndamento(){
+        $dt = array(
+            'id_ticket' => $this->input->post('id_ticket'),
+            'mensagem' => $this->input->post('mensagem'),
+            'data_hora' => $this->input->post('data_hora')
+        );
         
-    }
-
-    /* Esta função deveria listar os andamentos, mas por algum motivo não funciona
-    function listarAndamento(){
-        $this->load->model('andamento_model');
-        $andamentos = $this->andamento_model->listar();
+        $alt = $this->andamento_model->alterar($dt);
         
-        $this->load->view('listagem/list_andamento', $andamentos);
+        $this->load->view('alteracao/alt_andamento', $alt);
     }
-     */
+    
+    function buscarAndamento(){
+        $andamento = $this->input->post('buscar');
+        $res = $this->andamento_model->selecionarAndamento($andamento);
+        
+        $v = array(
+            'andamentos' => $res
+        );
+        
+        $this->load->view('alteracao/alt_andamento_2', $v);
+    }
 }

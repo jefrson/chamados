@@ -13,6 +13,7 @@
     </form>
 </div>
 <div class="alt_usuario">
+    <?php if($_SESSION['nome']): ?>
     <form action="<?php echo site_url('usuario/alterarUsuario'); ?>" method="post" class="">
         <?php $id = $this->session->id_usuario;
               $users = $this->usuario_model->selecionar($id);
@@ -67,6 +68,10 @@
         <button type="submit">Salvar</button>
         <button type="reset" class="">Cancelar</button>
     </form>
+    <?php else: ?>
+        <p>Nenhum dado encontrado para este usuário!</p>
+        <a href="<?php echo site_url('welcome/listarUsuario'); ?>">Clique aqui para voltar</a>
+    <?php endif; ?>
 </div>
 
 <?php $this->load->view('./rodape'); ?>

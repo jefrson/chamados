@@ -8,6 +8,7 @@
         <thead>
             <tr>
                 <th>Ativo</th>
+                <th>Ticket</th>
                 <th>Solicitante</th>
                 <th>Categoria</th>
                 <th>Urgência</th>
@@ -24,6 +25,7 @@
             <?php foreach ($tickets as $t): ?>
             <tr>
                 <td><?php echo $t->ativo==0?"Inativo":"Ativo"; ?></td>
+                <td><?php echo $t->id_ticket; ?></td>
                 <td><?php echo $t->solicitante; ?></td>
                 <td><?php echo $t->id_categoria; ?></td>
                 <td><?php echo $t->urgencia; ?></td>

@@ -18,7 +18,11 @@ class Ticket_model extends CI_Model{
     }
     
     function alterar($dt){
+        $this->db->where('id_ticket', $dt['id_ticket']);
         return $this->db->update('ticket', $dt);
     }
     
+    function selecionarTicket($id){
+        return $this->db->get_where('ticket',array('id_ticket' => $id))->result();
+    }
 }

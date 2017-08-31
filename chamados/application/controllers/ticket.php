@@ -12,41 +12,57 @@ class Ticket extends CI_Controller{
     
     //Adiciona um Ticket
     function adicionarTicket(){
-        //Cria um objeto e carrega os dados enviados por POST
-        $obj = new stdClass;
-        $obj->id_categoria = $this->input->post('id_categoria');
-        $obj->urgencia = $this->input->post('urgencia');
-        $obj->responsavel = $this->input->post('responsavel');
-        $obj->mensagem = $this->input->post('mensagem');
-        $obj->assunto = $this->input->post('assunto');
-        $obj->anexo = $this->input->post('anexo');
-        $obj->data_inicial = $this->input->post('data_inicial');
-        $obj->data_final = $this->input->post('data_final');
-        $obj->solicitante = $_SESSION['id_usuario'];
-        $st = $this->input->post('ativo');
-        if(isset($st)){
-            $obj->ativo = TRUE;    
-        }else{
-            $obj->ativo = FALSE;    
+        
+        //Faz a validação dos dados inseridos
+        $this->validar();
+        if($this->form_validation->run()){
+            //Cria um objeto e carrega os dados enviados por POST
+            $obj = new stdClass;
+            $obj->id_categoria = $this->input->post('id_categoria');
+            $obj->urgencia = $this->input->post('urgencia');
+            $obj->responsavel = $this->input->post('responsavel');
+            $obj->mensagem = $this->input->post('mensagem');
+            $obj->assunto = $this->input->post('assunto');
+            $obj->anexo = $this->input->post('anexo');
+            $obj->data_inicial = $this->input->post('data_inicial');
+            $obj->data_final = $this->input->post('data_final');
+            $obj->solicitante = $_SESSION['id_usuario'];
+            $st = $this->input->post('ativo');
+            if(isset($st)){
+                $obj->ativo = TRUE;    
+            }else{
+                $obj->ativo = FALSE;    
+            }
+
+            $this->do_upload($obj->anexo);
+
+            $this->ticket_model->adicionar($obj); //Envia para o Model o objeto que vai ser cadastrado
         }
-        
-        $this->do_upload($obj->anexo);
-        
-        $this->ticket_model->adicionar($obj); //Envia para o Model o objeto que vai ser cadastrado
-        
         $this->load->view('cadastro/cad_ticket'); //Redireciona para a página 
     }
     
-    function alterarTicket(){
+    function buscarTicket(){
+        $ticket = $this->input->post('buscar');
+        $res = $this->ticket_model->selecionarTicket($ticket);
         
+        $v = array(
+            'tickets' => $res
+        );
+        
+        $this->load->view('alteracao/alt_ticket_2', $v);
+    }
+            
+    function alterarTicket(){
+       
         $st = $this->input->post('ativo');
         if(isset($st)){
-            $ativo = 1;    
+            $ativo = TRUE;    
         }else{
-            $ativo = 0;    
+            $ativo = FALSE;    
         }
         
         $dt = array(
+            'id_ticket' => $this->input->post('id_ticket'),
             'id_categoria' => $this->input->post('id_categoria'),
             'urgencia' => $this->input->post('urgencia'),
             'responsavel' => $this->input->post('responsavel'),
@@ -58,7 +74,7 @@ class Ticket extends CI_Controller{
             'ativo' => $ativo
         );
         
-        $alt = $this->usuario_model->alterar($dt);
+        $alt = $this->ticket_model->alterar($dt);
         
         $this->load->view('alteracao/alt_ticket', $alt);
     }
