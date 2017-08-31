@@ -5,7 +5,7 @@ class Welcome extends CI_Controller {
 
     public function index()
     {
-            $this->load->view('welcome_message');
+        $this->load->view('login/login');
     }
     
     function cadUsuario(){
@@ -42,5 +42,9 @@ class Welcome extends CI_Controller {
     
     function alterarAndamento(){
         $this->load->view('alteracao/alt_andamento');
+    }
+    
+    function sair(){
+        $this->load->view('login/login');
     }
 }

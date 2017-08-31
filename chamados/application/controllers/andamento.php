@@ -3,11 +3,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Andamento extends CI_Controller{
     
-    function adicionarAndamento(){
-        $this->load->model('andamento_model');
+    function __construct() {
         
+        parent::__construct();
+        
+        $this->load->model('andamento_model');
+        $this->load->model('ticket_model');
+    }
+         
+    function adicionarAndamento(){
+      
         $obj = new stdClass;
-        $obj->ticket = $this->input->post('ticket');
+        $obj->id_ticket = $this->input->post('id_ticket');
         $obj->mensagem = $this->input->post('mensagem');
         $obj->data_hora = $this->input->post('data_hora');
         
@@ -16,10 +23,14 @@ class Andamento extends CI_Controller{
     }
     
     function listarTickets(){
-        $this->load->model('tickets_model');
-        $tickets = $this->tickets_model->listarTickets();
         
-        $this->load->view('cadastro/cad_andamento', $tickets);
+        $tickets = $this->ticket_model->listarTickets();
+        
+        $v = array(
+            'tickets' => $tickets
+        );
+        
+        $this->load->view('cadastro/cad_andamento', $v);
     }
 
     function alterarAndamento(){

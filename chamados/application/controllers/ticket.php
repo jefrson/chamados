@@ -3,10 +3,15 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Ticket extends CI_Controller{
     
+    function __construct() {
+        
+        parent::__construct();
+        
+        $this->load->model('ticket_model');
+    }
+    
     //Adiciona um Ticket
     function adicionarTicket(){
-        $this->load->model('ticket_model'); //Carrega o Model
-            
         //Cria um objeto e carrega os dados enviados por POST
         $obj = new stdClass;
         $obj->id_categoria = $this->input->post('id_categoria');
@@ -17,14 +22,15 @@ class Ticket extends CI_Controller{
         $obj->anexo = $this->input->post('anexo');
         $obj->data_inicial = $this->input->post('data_inicial');
         $obj->data_final = $this->input->post('data_final');
-        $obj->solicitante = $this->input->post('solicitante');
+        $obj->solicitante = $_SESSION['id_usuario'];
         $st = $this->input->post('ativo');
         if(isset($st)){
-            $obj->ativo = 1;    
+            $obj->ativo = TRUE;    
         }else{
-            $obj->ativo = 0;    
+            $obj->ativo = FALSE;    
         }
-                
+        
+        $this->do_upload($obj->anexo);
         
         $this->ticket_model->adicionar($obj); //Envia para o Model o objeto que vai ser cadastrado
         
@@ -32,7 +38,6 @@ class Ticket extends CI_Controller{
     }
     
     function alterarTicket(){
-        $this->load->model('ticket_model');
         
         $st = $this->input->post('ativo');
         if(isset($st)){
@@ -57,8 +62,30 @@ class Ticket extends CI_Controller{
         
         $this->load->view('alteracao/alt_ticket', $alt);
     }
+    
+    private function validar(){
+        $this->form_validation->set_rules('responsavel','Responsável','trim|required|alpha|');
+        $this->form_validation->set_rules('mensagem','Mensagem','trim|required');
+        $this->form_validation->set_rules('assunto','Assunto','trim|required');
+        $this->form_validation->set_rules('data_inicial','Data Inicial','trim|required');
+        $this->form_validation->set_rules('data_final','Data Final','trim|required');
+        
+        $this->form_validation->set_message('required', 'O campo %s é obrigatório!');
+        $this->form_validation->set_message('alpha', 'O campo %s aceita apenas letras!');
+    }
+    
+    private function do_upload($arq){
+        $config['upload_path'] = './uploads/';
+        $config['allowed_types'] = 'pdf|jpg|png|doc|docx';
+        $config['max_size'] = 100;
+        $config['max_width'] = 1024;
+        $config['max_height'] = 768;
+        
+        $this->upload->initialize($config);
+        $this->upload->do_upload($arq);
+    }
 
-    /* Esta função deveria listar os tickets, mas por algum motivo não funciona
+    /* Esta função deveria listar os tickets, mas por algum motivo não funciona 
     function listarTicket(){
         $this->load->model('ticket_model');
         $tickets = $this->ticket_model->listarTicket();

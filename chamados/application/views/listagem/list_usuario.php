@@ -7,7 +7,6 @@
     <table>
         <thead>
             <tr>
-                <th></th>
                 <th>ID</th>
                 <th>Nome</th>
                 <th>Setor</th>
@@ -16,14 +15,13 @@
                 <th>Matrícula</th>
                 <th>CPF</th>
                 <th>E-mail</th>
-                <th>Alterar</th>
+                <th>Nivel</th>
             </tr>
         </thead>
         <tbody>
             <?php $usuarios = $this->usuario_model->listar(); ?>
             <?php foreach ($usuarios as $us): ?>
             <tr>
-                <td><form id="alt" action="<?php echo site_url('usuario/alterarUsuario'); ?>"><input type="checkbox" value="<?php echo $us->id_usuario; ?>"></form></td>
                 <td><?php echo $us->id_usuario; ?></td>
                 <td><?php echo $us->nome; ?></td>
                 <td><?php echo $us->id_setor; ?></td>
@@ -32,11 +30,11 @@
                 <td><?php echo $us->matricula; ?></td>
                 <td><?php echo $us->cpf; ?></td>
                 <td><?php echo $us->email; ?></td>
+                <td><?php echo $us->nivel==1?"Usuário":"Admin"; ?></td>
             </tr>
             <?php endforeach; ?>
         </tbody>
     </table>
-    <button form="alt" type="submit">Alterar</button>
 </div>
 
 <?php $this->load->view('./rodape'); ?>

@@ -11,19 +11,25 @@
         <br>
         <label>
             Solicitante:
-            <?php $this->load->model('ticket_model'); ?>
-            <?php $ids = $this->ticket_model->listarUsuarios(); ?>
+            <?php $nome = $_SESSION['nome']; ?>
+            <input type="text" name="solicitante" disabled="disabled" value="<?php echo $nome; ?>">
+            
+            <!--Esta parte exibe um Combobox de usuários
+            <?php //$this->load->model('ticket_model'); ?>
+            <?php //$ids = $this->ticket_model->listarUsuarios(); ?>
             <select name="solicitante">
                 <option value="0"></option>
-                <?php foreach($ids as $id): ?>
-                    <option value="<?php echo $id->id_usuario; ?>"><?php echo $id->nome; ?></option>
-                <?php endforeach; ?>
+                <?php //foreach($ids as $id): ?>
+                    <option value="<?php //echo $id->id_usuario; ?>"><?php //echo $id->nome; ?></option>
+                <?php //endforeach; ?>
             </select>
+            -->
         </label>
         <br>
         <label>
             Categoria:
             <select name="id_categoria">
+                <option value="0"></option>
                 <option value="1">Categoria 1</option>
                 <option value="2">Categoria 2</option>
                 <option value="3">Categoria 3</option>
@@ -34,43 +40,42 @@
         <label>
             Urgência:
             <select name="urgencia">
-                <option name="baixa">Baixa</option>
-                <option name="media">Média</option>
-                <option name="alta">Alta</option>
-                <option name="urgente">Urgente</option>
+                <option value="0"></option>
+                <option value="baixa">Baixa</option>
+                <option value="media">Média</option>
+                <option value="alta">Alta</option>
+                <option value="urgente">Urgente</option>
             </select>
         </label>
         <br>
         <label>
             Responsável:
-            <input type="text" name="responsavel">
+            <input type="text" name="responsavel" value="<?php echo set_value('responsavel'); ?>"><?php echo form_error('responsavel'); ?>
         </label>
         <br>
         <label>
             Data Inicial:
-            <input type="date" name="data_inicial">
+            <input type="datetime-local" name="data_inicial">
         </label>
         <br>
         <label>
             Data Final:
-            <input type="date" name="data_final">
+            <input type="datetime-local" name="data_final">
         </label>
         <br>
         <label>
             Assunto:
-            <textarea name="assunto" rows="1">
-            </textarea>
+            <textarea name="assunto" rows="1" value="<?php echo set_value('assunto'); ?>"></textarea><?php echo form_error('assunto'); ?>
         </label>
         <br>
         <label>
             Mensagem:
-            <textarea name="mensagem">
-            </textarea>
+            <textarea name="mensagem" value="<?php echo set_value('mensagem'); ?>"></textarea><?php echo form_error('mensagem'); ?>
         </label>
         <br>
         <label>
             Anexo:
-            <input type="file" name="anexo">
+            <input type="file" name="anexo" accept="pdf">
         </label>
         <br>
         <button type="submit">Adicionar</button>

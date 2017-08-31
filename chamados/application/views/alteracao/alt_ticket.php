@@ -5,21 +5,35 @@
 </div>
 <div class="alt_ticket">
     <form action="<?php echo site_url('ticket/adicionarTicket'); ?>" method="post">
+        <?php $id = $this->session->id_usuario; 
+              $users = $this->usuario_model->selecionar($id);
+              foreach ($users as $us):
+        ?>
         <label>
             Ativo:
-            <input type="checkbox" name="ativo">
+            <?php if($us->ativo == 1):
+                    echo "<input type='checkbox' name='ativo' checked='checked'>";
+                  else:
+                    echo "<input type='checkbox' name='ativo'>";
+                  endif;
+            ?>
         </label>
         <br>
         <label>
             Solicitante:
-            <?php $this->load->model('ticket_model'); ?>
-            <?php $ids = $this->ticket_model->listarUsuarios(); ?>
+             <?php $nome = $_SESSION['nome']; ?>
+            <input type="text" name="solicitante" disabled="disabled" value="<?php echo $nome; ?>">
+            
+            <!--Esta parte exibe um Combobox de usuários
+            <?php //$this->load->model('ticket_model'); ?>
+            <?php //$ids = $this->ticket_model->listarUsuarios(); ?>
             <select name="solicitante">
                 <option value="0"></option>
-                <?php foreach($ids as $id): ?>
-                    <option value="<?php echo $id->id_usuario; ?>"><?php echo $id->nome; ?></option>
-                <?php endforeach; ?>
+                <?php //foreach($ids as $id): ?>
+                    <option value="<?php //echo $id->id_usuario; ?>"><?php //echo $id->nome; ?></option>
+                <?php //endforeach; ?>
             </select>
+            -->
         </label>
         <br>
         <label>
@@ -74,6 +88,7 @@
             <input type="file" name="anexo">
         </label>
         <br>
+        <?php endforeach; ?>
         <button type="submit">Alterar</button>
         <button type="reset">Cancelar</button>
     </form>

@@ -18,7 +18,7 @@
             <?php foreach ($andamentos as $and): ?>
                 <tr>
                     <td><?php echo $and->id_andamento; ?></td>
-                    <td><?php echo $and->ticket; ?></td>
+                    <td><?php echo $and->id_ticket; ?></td>
                     <td><?php echo $and->mensagem; ?></td>
                     <td><?php echo $and->data_hora; ?></td>
                 </tr>
