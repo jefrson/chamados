@@ -1,10 +1,9 @@
 <?php $this->load->view('./cabecalho'); ?>
-<div class="col-12">
-    <div class="header">
-        <h1>Listagem de Tickets</h1>
-    </div>
-    <div class="list_ticket">
-        <table class="table table-responsive table-striped table-hover">
+
+<h4 class="card-header">Listagem de Tickets</h4>
+<div class="card-body">
+    <div class="row">
+        <table class="table table-sm table-striped table-hover">
             <thead class="thead-default">
                 <tr>
                     <th>Ativo</th>

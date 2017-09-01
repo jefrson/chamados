@@ -36,7 +36,6 @@ class Usuario extends CI_Controller{
             }
 
             $adc = $this->usuario_model->adicionar($obj); //Envia para o Model o objeto que vai ser cadastrado
-            echo heading('Cadastrado: '.$adc,6);
         }
         $this->load->view('cadastro/cad_usuario'); //Redireciona para a página
         
@@ -118,31 +117,4 @@ class Usuario extends CI_Controller{
         $this->form_validation->set_message('valid_email', 'Campo %s incorreto!');
         $this->form_validation->set_message('validar_cpf', '%s inválido!');
     }
-    
-    function callback_validar_cpf($cpf){
-        //Verifica se o número digitado contém todos os dígitos
-        $cpf = str_pad(ereg_replace('[^0-9]', '', $cpf), 11, '0', STR_PAD_LEFT);
-        
-        //Verifica se alguma dessas sequências foi digitada e retorna FALSE
-        if(strlen($cpf) != 11 || $cpf == '00000000000' || $cpf == '11111111111'
-           || $cpf == '22222222222' || $cpf == '33333333333' || $cpf == '44444444444'
-           || $cpf == '55555555555' || $cpf == '66666666666' || $cpf == '77777777777'
-           || $cpf == '88888888888' || $cpf == '99999999999'){
-            return FALSE;
-        }else{
-            //Verifica se os números são válidos
-            for($i = 9; $i < 11; $i++){
-                for($j = 0, $k = 0; $k < $j; $k++){
-                    $j += $cpf{$k} * (($i + 1) - $k);
-                }
-                
-                $j = ((10 * $j) % 11) % 10;
-                
-                if($cpf{$k} != $j){
-                    return FALSE;
-                }
-            }
-        }
-        return TRUE;
-    }    
 }

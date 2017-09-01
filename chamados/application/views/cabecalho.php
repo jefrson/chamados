@@ -11,15 +11,16 @@
             }
         </style>
     </head>
-    <body class="container-fuid">
+    <body class="container-fluid">
         <div class="row">
-            <header class="col-12">
-                <nav class="navbar fixed-top navbar-light bg-light">
-                    <a class="navbar-brand" href="#">Chamados</a>
+            <header class="col">
+                <nav class="navbar navbar-expand-md fixed-top navbar-light bg-light">
+                    <a class="navbar-brand" href="<?php echo site_url('welcome/cadTicket'); ?>">Chamados</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu" aria-expanded='false' aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
-                    <div class="collapse navbar-collapse" id="menu">
+                    
+                    <div class="collapse navbar-collapse mr-auto" id="menu">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="menu_cad" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -84,3 +85,7 @@
                 </nav>
             </header>
         </div>
+        <div class="row align-self-center justify-content-center">
+            <div class="col-auto">
+                <div class="card card-default">
+                

@@ -13,7 +13,7 @@
     </head>
     <body class="container">
         <div class="row align-self-center justify-content-center">
-            <div class="col-8">
+            <div class="col-6s">
                 <div class="card card-default">
                     <header class="card-header">
                         <h6 class="card-title">Entre com sua Matrícula e CPF para acessar</h6>
@@ -24,13 +24,15 @@
                                 <label for="matricula" class="form-control-label">
                                     Matricula
                                 </label>
-                                <input type="number" id="matricula" class="form-control" name="matricula">
+                                <input type="text" id="matricula" class="form-control" name="matricula">
+                                <small class="form-text text-muted"></small>
                             </div>
                             <div class="form-group">
                                 <label for="cpf" class="form-control-label">
                                     CPF
                                 </label>
                                 <input type="text" id="cpf" class="form-control" name="cpf">
+                                <small class="form-text text-muted">Digite seu CPF sem pontos e traço</small>
                             </div>
                             <div class="controls justify-content-center">
                                 <button class="btn btn-primary btn-block" type="submit">Entrar</button>

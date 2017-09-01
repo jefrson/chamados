@@ -1,43 +1,38 @@
 <?php $this->load->view('./cabecalho') ?>
-<div class="row align-self-center justify-content-center">
-    <div class="col-8">
-        <div class="card card-default">
-            <div class="card-header">
-                <h1 class="card-title">Em Andamento</h1>
-            </div>
-            <div class="cad_andamento">
-                <form class="form" action="<?php echo site_url('andamento/adicionarAndamento'); ?>" method="post">
-                    <div class="form-group">
-                        <label for="id_ticket" class="form-control-label">
-                            Ticket
-                        </label>
-                        <?php $tickets = $this->andamento_model->listarTickets(); ?>
-                        <select name="id_ticket" id="id_ticket" class="form-control">
-                            <option value="0"></option>
-                            <?php foreach($tickets as $t): ?>
-                                <option value="<?php echo $t->id_ticket; ?>"><?php echo $t->id_ticket; ?></option>
-                            <?php endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="mensagem" class="form-control-label">
-                            Mensagem
-                        </label>
-                        <textarea id="mensagem" name="mensagem" class="form-control">
-                        </textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="data_hora" class="form-control-label">
-                            Data/Hora    
-                        </label>
-                        <input type="datetime-local" id="data_hora" class="form-control" placeholder="01/01/2017 01:00" name="data_hora">
-                    </div>
-                    <div class="controls">
-                        <button class="btn btn-primary" type="submit">Adicionar</button>
-                        <button class="btn btn-secondary" type="reset">Limpar</button>
-                    </div>
-                </form>
-            </div>
+<h4 class="card-header">Em Andamento</h4>
+<div class="card-body">
+    <form class="form" action="<?php echo site_url('andamento/adicionarAndamento'); ?>" method="post">
+        <div class="form-group">
+            <label for="id_ticket" class="form-control-label">
+                Ticket
+            </label>
+            <?php $tickets = $this->andamento_model->listarTickets(); ?>
+            <select name="id_ticket" id="id_ticket" class="form-control" required>
+                <option value="0"></option>
+                <?php foreach($tickets as $t): ?>
+                    <option value="<?php echo $t->id_ticket; ?>"><?php echo $t->id_ticket; ?></option>
+                <?php endforeach; ?>
+            </select>
+            <?php echo form_error('id_ticket');?>
         </div>
-    </div>
+        <div class="form-group">
+            <label for="mensagem" class="form-control-label">
+                Mensagem
+            </label>
+            <textarea id="mensagem" name="mensagem" class="form-control <?php echo form_error('mensagem')?"is-invalid":""?>"><?php echo form_error('mensagem')?set_value('mensagem'):''; ?></textarea>
+            <?php echo form_error('mensagem');?>
+        </div>
+        <div class="form-group">
+            <label for="data_hora" class="form-control-label">
+                Data/Hora    
+            </label>
+            <input type="datetime-local" id="data_hora" class="form-control <?php echo form_error('data_hora')?"is-invalid":""?>" placeholder="01/01/2017 01:00" name="data_hora" value="<?php echo form_error('data_hora')?set_value('data_hora'):''; ?>">
+            <?php echo form_error('data_hora');?>
+        </div>
+        <div class="controls">
+            <button class="btn btn-primary" type="submit">Adicionar</button>
+            <button class="btn btn-secondary" type="reset">Limpar</button>
+        </div>
+    </form>
+</div>
 <?php $this->load->view('./rodape') ?>

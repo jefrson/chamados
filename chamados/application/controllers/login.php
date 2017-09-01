@@ -26,8 +26,10 @@ class Login extends CI_Controller{
                 $this->session->logado = TRUE;
             }
             
+            $this->load->view('login/login_success');
             $this->load->view('cadastro/cad_ticket');
         }else{
+            $this->load->view('login/login_failed');
             $this->load->view('login/login');
         }
     }
@@ -39,11 +41,10 @@ class Login extends CI_Controller{
     }
             
     function logado(){
-        if(!isset($this->session)){
+        if(!isset($this->session->logado)){
             return TRUE;
         }else{
             return FALSE;
         }
     }
 }
-
