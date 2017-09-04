@@ -22,7 +22,7 @@
                     Categoria
                 </label>
                 <select id="id_categoria" name="id_categoria" class="form-control" required>
-                    <option value="0"></option>
+                    <option></option>
                     <option value="1">Categoria 1</option>
                     <option value="2">Categoria 2</option>
                     <option value="3">Categoria 3</option>
@@ -34,7 +34,7 @@
                     Urgência
                 </label>
                 <select id="urgencia" class="form-control" name="urgencia" required>
-                    <option value="0"></option>
+                    <option></option>
                     <option value="baixa">Baixa</option>
                     <option value="media">Média</option>
                     <option value="alta">Alta</option>

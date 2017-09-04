@@ -1,11 +1,11 @@
 <?php $this->load->view('./cabecalho'); ?>
 <h4 class="card-header">Alteração de Usuário</h4>
 <div class="card-body">
-    <?php $id = $this->session->nome;
-        $users = $this->usuario_model->selecionar($id);
+    <?php $nome = $this->session->nome;
+        $users = $this->usuario_model->selecionar($nome);
     ?>
     <?php if($users): ?>
-    <form action="<?php echo site_url('usuario/alterarUsuario'); ?>" method="post" class="">
+    <form action="<?php echo site_url('alterar_usuario'); ?>" method="post" class="">
         <?php foreach ($users as $us ): ?>        
         <div class="form-row">    
             <div class="form-group col-2">
@@ -76,7 +76,7 @@
         <?php endforeach; ?>
         <div class="controls">
             <button class="btn btn-primary" type="submit">Salvar</button>
-            <button class="btn btn-secondary" type="reset" class="">Cancelar</button>
+            <a class="btn btn-secondary" href="<?php echo site_url('cadastro_ticket'); ?>">Cancelar</a>
         </div>
     </form>
     <?php else: ?>

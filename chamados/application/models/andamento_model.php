@@ -6,15 +6,32 @@ class Andamento_model extends CI_Model{
     }
     
     function adicionar($objeto){
-        return $this->db->insert('andamento', $objeto);
+        if(!$this->db->insert('andamento', $objeto)){
+            $er = $this->db->error();
+            return $er;
+        }else{
+            return $this->db->insert('andamento', $objeto);
+        }
     }
     
     function listarTickets(){
-        return $this->db->query('select id_ticket from ticket')->result();
+        $res = $this->db->query('select * from ticket');
+        if(!$this->db->query('select * from ticket')){
+            $er = $this->db->error();
+            return $er;
+        }else{
+            return $res->result();
+        }
     }
     
     function listar(){
-        return $this->db->query('select * from andamento')->result();
+        $res = $this->db->query('select * from andamento');
+        if(!$this->db->query('select * from andamento')){
+            $er = $this->db->error();
+            return $er;
+        }else{
+            return $res->result();
+        }
     }
     
     function alterar($dt){
@@ -23,6 +40,12 @@ class Andamento_model extends CI_Model{
     }
     
     function selecionarAndamento($id){
-        return $this->db->get_where('andamento', array('id_ticket' => $id))->result();
+        $res = $this->db->get_where('andamento',array('id_ticket' => $id));
+        if(!$this->db->get_where('andamento',array('id_ticket' => $id))){
+            $er = $this->db->error();
+            return $er;
+        }else{
+            return $res->result();
+        }
     }
 }

@@ -35,17 +35,28 @@ class Andamento extends CI_Controller{
         
         $this->load->view('cadastro/cad_andamento', $v);
     }
-
+    
+    function listarAndamento(){
+        $res = $this->andamento_model->listar();
+        
+        $v =array(
+            'andamentos' => $res
+        );
+        
+        $this->load->view('listagem/list_andamento', $v);
+    }
+    
     function alterarAndamento(){
+        
         $dt = array(
             'id_ticket' => $this->input->post('id_ticket'),
             'mensagem' => $this->input->post('mensagem'),
             'data_hora' => $this->input->post('data_hora')
         );
         
-        $alt = $this->andamento_model->alterar($dt);
+        $this->andamento_model->alterar($dt);
         
-        $this->load->view('alteracao/alt_andamento', $alt);
+        $this->load->view('alteracao/alt_andamento');
     }
     
     function buscarAndamento(){

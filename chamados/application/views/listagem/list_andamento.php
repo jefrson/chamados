@@ -11,7 +11,6 @@
             </tr>
         </thead>
         <tbody>
-            <?php $andamentos = $this->andamento_model->listar(); ?>
             <?php foreach ($andamentos as $and): ?>
                 <tr>
                     <td><?php echo $and->id_andamento; ?></td>
@@ -21,6 +20,13 @@
                 </tr>
             <?php endforeach; ?>
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="4">
+                    <small>Número de registros retornados:</small>
+                </td>
+            </tr>
+        </tfoot>
     </table>
 </div>
 <?php $this->load->view('./rodape'); ?>

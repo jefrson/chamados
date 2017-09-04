@@ -11,6 +11,10 @@ class Login extends CI_Controller{
         $this->load->library('session');
     }
     
+    function index(){
+        $this->load->view('login/login');
+    }
+            
     function verificarLogin(){
         
         $login = $this->input->post('matricula');
@@ -26,10 +30,8 @@ class Login extends CI_Controller{
                 $this->session->logado = TRUE;
             }
             
-            $this->load->view('login/login_success');
             $this->load->view('cadastro/cad_ticket');
         }else{
-            $this->load->view('login/login_failed');
             $this->load->view('login/login');
         }
     }

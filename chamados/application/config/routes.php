@@ -49,6 +49,35 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | Examples:	my-controller/index	-> my_controller/index
 |		my-controller/my-method	-> my_controller/my_method
 */
+$route['cadastro_ticket'] = 'ticket/adicionarTicket';
+$route['cadastro_tickets'] = 'ticket/adicionarTicket';
+$route['cadastro_usuario'] = 'usuario/adicionarUsuario';
+$route['cadastro_usuarios'] = 'usuario/adicionarUsuario';
+$route['cadastro_andamento'] = 'andamento/adicionarAndamento';
+$route['cadastro_andamentos'] = 'andamento/adicionarAndamento';
+$route['listar_tickets'] = 'ticket/listarTicket';
+$route['listar_ticket'] = 'ticket/listarTicket';
+$route['listar_usuarios'] = 'usuario/listarUsuario';
+$route['listar_usuario'] = 'usuario/listarUsuario';
+$route['listar_andamento'] = 'andamento/listarAndamento';
+$route['listar_andamentos'] = 'andamento/listarAndamento';
+$route['buscar_usuario'] = 'usuario/buscarUsuario';
+$route['buscar_usuarios'] = 'usuario/buscarUsuario';
+$route['buscar_andamento'] = 'andamento/buscarAndamento';
+$route['buscar_andamentos'] = 'andamento/buscarAndamento';
+$route['buscar_ticket'] = 'ticket/buscarTicket';
+$route['buscar_tickets'] = 'ticket/buscarTicket';
+$route['alterar_ticket'] = 'ticket/alterarTicket';
+$route['alterar_tickets'] = 'ticket/alterarTicket';
+$route['alterar_andamento'] = 'andamento/alterarAndamento';
+$route['alterar_andamentos'] = 'andamento/alterarAndamento';
+$route['alterar_usuario'] = 'usuario/alteraUsuario';
+$route['alterar_usuarios'] = 'usuario/buscarUsuario';
+$route['login'] = 'login/index';
+$route['verificar_login'] = 'login/verificarLogin';
+$route['sair'] = 'login/logOut';
 $route['default_controller'] = 'Welcome';
 $route['404_override'] = 'errors/html/error_404';
 $route['translate_uri_dashes'] = FALSE;
+
+

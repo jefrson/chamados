@@ -43,18 +43,24 @@ class Usuario extends CI_Controller{
     
     //Busca o usuário pelo nome inserido
     function buscarUsuario(){
-        
-        $id = $this->input->post('nome');
-        
-        $r = $this->usuario_model->selecionar($id); //Envia para o Model o nome e retorna os dados do banco
-        
+        $nome = $this->input->post('nome');
+
+        $r = $this->usuario_model->selecionar($nome); //Envia para o Model o nome e retorna os dados do banco
+
         $v = array(
             'usuario' => $r
         );
-        
-        $this->load->view('alteracao/alt_usuarios', $v); //Redireciona para a página e envia o vetor 'usuario'
+        if(!isset($nome)){
+            $this->load->view('alteracao/buscar_usuario');
+        }else{
+            $this->load->view('alteracao/alt_usuarios', $v); //Redireciona para a página e envia o vetor 'usuario' 
+        }
     }
     
+    function alteraUsuario(){
+        $this->load->view('alteracao/alt_usuario');
+    }
+
     //Altera os dados do usuário
     function alterarUsuario(){
         //Pega o id do usuário pelo input ou pela sessão
@@ -63,8 +69,6 @@ class Usuario extends CI_Controller{
         $nivel = $this->input->post('nivel');
         $cpf = $this->input->post('cpf');
         $nome = $this->input->post('nome');
-        
-        
         
         $dt = array(
             'id_usuario' => $id,
@@ -79,24 +83,23 @@ class Usuario extends CI_Controller{
             'senha' => md5($cpf)
         );
         
-        $alt = $this->usuario_model->alterar($dt);
-        
-        $this->load->view('alteracao/alt_usuario');
-        echo heading('Alterado: '.$alt,6);
-    }
+        $this->usuario_model->alterar($dt);
 
-    /* Esta função deveria listar os usuarios, mas por algum motivo não funciona
+        $this->load->view('alteracao/alt_usuario');
+    }
+    
+    //Exibe uma lista em forma de tabela dos usuários cadastrados
     function listarUsuario(){
-        $this->load->model('usuario_model');
-        $usuarios = $this->usuario_model->listarUsuario();
         
+        $usuarios = $this->usuario_model->listar(3);
+               
         $u = array(
-            'usuarios' => $usuarios
+            'usuarios' => $usuarios,
+            'regs' => $this->usuario_model->totalReg()
         );
         
         $this->load->view('listagem/list_usuario', $u);
     }
-    */
     
     //Valida os campos preenchidos no formulário
     private function validar(){

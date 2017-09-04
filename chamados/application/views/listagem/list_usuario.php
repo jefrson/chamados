@@ -16,7 +16,6 @@
             </tr>
         </thead>
         <tbody>
-            <?php $usuarios = $this->usuario_model->listar(); ?>
             <?php foreach ($usuarios as $us): ?>
             <tr>
                 <td><?php echo $us->id_usuario; ?></td>
@@ -31,6 +30,40 @@
             </tr>
             <?php endforeach; ?>
         </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="9">
+                    <small>Número de registros retornados: <?php echo $regs;?></small>
+                </td>
+            </tr>
+        </tfoot>
     </table>
+</div>
+<div class="card-footer">
+    <nav aria-label="Paginação">
+        <ul class="pagination">
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Anterior">
+                    <span arai-hidden="true">&laquo;</span>
+                    <span class="sr-only">Anterior</span>
+                </a>
+            </li>
+            <li class="page-item <?php echo 'active'; ?>">
+                <a class="page-link" href="">1</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="">2</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="">3</a>
+            </li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Próximo">
+                    <span aria-hiden="true">&raquo;</span>
+                    <span class="sr-only">Próximo</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 </div>
 <?php $this->load->view('./rodape'); ?>

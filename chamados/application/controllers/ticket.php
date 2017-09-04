@@ -42,6 +42,7 @@ class Ticket extends CI_Controller{
     }
     
     function buscarTicket(){
+        
         $ticket = $this->input->post('buscar');
         $res = $this->ticket_model->selecionarTicket($ticket);
         
@@ -74,12 +75,14 @@ class Ticket extends CI_Controller{
             'ativo' => $ativo
         );
         
-        $alt = $this->ticket_model->alterar($dt);
+        $this->ticket_model->alterar($dt);
         
-        $this->load->view('alteracao/alt_ticket', $alt);
+        $this->load->view('alteracao/alt_ticket');
     }
     
     private function validar(){
+        $this->form_validation->set_rules('id_categoria', 'Categoria', 'trim|required');
+        $this->form_validation->set_rules('urgencia', 'Urgência', 'trim|required');
         $this->form_validation->set_rules('responsavel','Responsável','trim|required|alpha');
         $this->form_validation->set_rules('mensagem','Mensagem','trim|required');
         $this->form_validation->set_rules('assunto','Assunto','trim|required');
@@ -92,7 +95,7 @@ class Ticket extends CI_Controller{
     
     private function do_upload($arq){
         $config['upload_path'] = './uploads/';
-        $config['allowed_types'] = 'pdf|jpg|png|doc|docx';
+        $config['allowed_types'] = 'pdf|jpg|png|doc|xls';
         $config['max_size'] = 100;
         $config['max_width'] = 1024;
         $config['max_height'] = 768;
@@ -101,12 +104,14 @@ class Ticket extends CI_Controller{
         $this->upload->do_upload($arq);
     }
 
-    /* Esta função deveria listar os tickets, mas por algum motivo não funciona 
     function listarTicket(){
         $this->load->model('ticket_model');
-        $tickets = $this->ticket_model->listarTicket();
+        $res = $this->ticket_model->listar();
         
-        $this->load->view('listagem/lis_ticket', $tickets);
+        $v = array(
+            'tickets' => $res
+        );
+        
+        $this->load->view('listagem/list_ticket', $v);
     }
-    */
 }

@@ -8,12 +8,11 @@
             </label>
             <?php $tickets = $this->andamento_model->listarTickets(); ?>
             <select name="id_ticket" id="id_ticket" class="form-control" required>
-                <option value="0"></option>
+                <option></option>
                 <?php foreach($tickets as $t): ?>
                     <option value="<?php echo $t->id_ticket; ?>"><?php echo $t->id_ticket; ?></option>
                 <?php endforeach; ?>
             </select>
-            <?php echo form_error('id_ticket');?>
         </div>
         <div class="form-group">
             <label for="mensagem" class="form-control-label">
