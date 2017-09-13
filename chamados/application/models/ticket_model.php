@@ -6,7 +6,8 @@ class Ticket_model extends CI_Model{
     }
     
     function adicionar($objeto){
-        return $this->db->insert('ticket', $objeto);
+        $this->db->insert('ticket', $objeto);
+        return $this->db->affected_rows();
     }
     
     function listarUsuarios(){
@@ -36,12 +37,13 @@ class Ticket_model extends CI_Model{
     }
     
     function totalReg(){
-        return $this->db->count_all_results('ticket');
+        return $this->db->count_all('ticket');
     }
             
     function alterar($dt){
         $this->db->where('id_ticket', $dt['id_ticket']);
-        return $this->db->update('ticket', $dt);
+        $this->db->update('ticket', $dt);
+        return $this->db->affected_rows();
     }
     
     function selecionarTicket($id){

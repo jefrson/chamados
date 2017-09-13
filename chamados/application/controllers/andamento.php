@@ -41,8 +41,7 @@ class Andamento extends CI_Controller{
         
         $v =array(
             'andamentos' => $dt['andamentos'],
-            'paginacao' => $dt['paginacao'],
-            'total' => $this->andamento_model->totalReg()
+            'paginacao' => $dt['paginacao']
         );
         
         $this->load->view('listagem/list_andamento', $v);
@@ -50,9 +49,16 @@ class Andamento extends CI_Controller{
     
      //Adiciona a paginação à tabela
     function paginacao(){
-        $total = $this->andamento_model->totalReg(); //Total de registros
-        $regPag = 6; //Registros por página        
+        $regPag = 6; //Registros por página
+        //
+        //Calcula o inicio da visualização dos registros
+        $offset = substr($this->uri->uri_string(3),18)*($regPag/2);
         
+        //Busca os andamentos com o limite $regPag e começando em $offset
+        $dt['andamentos'] = $this->andamento_model->listar($regPag,$offset);
+        
+        $total = count($dt); //Total de registros
+
         $pag = ceil($total/$regPag); //Calcula quantas páginas serão geradas
         
         //Configuração da paginação
@@ -82,13 +88,7 @@ class Andamento extends CI_Controller{
         //Adiciona a configuração e cria os links
         $this->pagination->initialize($config);
         $dt['paginacao'] = $this->pagination->create_links();
-        
-        //Calcula o inicio da visualização dos registros
-        $offset = substr($this->uri->uri_string(3),18)*($regPag/2);
-        
-        //Busca os andamentos com o limite $regPag e começando em $offset
-        $dt['andamentos'] = $this->andamento_model->listar($regPag,$offset);
-        
+                
         return $dt;
     }
     

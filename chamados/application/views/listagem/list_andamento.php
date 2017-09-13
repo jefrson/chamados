@@ -23,7 +23,7 @@
         <tfoot>
             <tr>
                 <td colspan="4">
-                    <small>Número de registros retornados: <?php echo $total;?></small>
+                    <caption>Número de registros retornados: <?php echo count($andamentos); ?></caption>
                 </td>
             </tr>
         </tfoot>

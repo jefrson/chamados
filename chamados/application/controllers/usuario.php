@@ -75,7 +75,7 @@ class Usuario extends CI_Controller{
             'senha' => md5($cpf)
         );
         
-        $this->usuario_model->alterar($dt);
+        $alt = $this->usuario_model->alterar($dt);
         
         $this->load->view('alteracao/alt_usuario');
     }

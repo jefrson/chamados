@@ -3,7 +3,7 @@
 <h4 class="card-header">Listagem de Tickets</h4>
 <div class="card-body">
     <div class="row">
-        <table class="table table-sm table-striped table-hover">
+        <table class="table table-striped table-hover table-responsive">
             <thead class="thead-default">
                 <tr>
                     <th>Ticket</th>
@@ -11,7 +11,6 @@
                     <th>Categoria</th>
                     <th>Urgência</th>
                     <th>Responsável</th>
-                    <th>Mensagem</th>
                     <th>Assunto</th>
                     <th>Data Inicial</th>
                     <th>Data Final</th>
@@ -26,7 +25,6 @@
                             <td><?php echo $t->id_categoria; ?></td>
                             <td><?php echo $t->urgencia; ?></td>
                             <td><?php echo $t->responsavel; ?></td>
-                            <td><?php echo $t->mensagem; ?></td>
                             <td><?php echo $t->assunto; ?></td>
                             <td><?php echo $t->data_inicial; ?></td>
                             <td><?php echo $t->data_final; ?></td>
@@ -37,7 +35,7 @@
             <tfoot>
                 <tr>
                     <td colspan="9">
-                        <small>Número de registros retornados: <?php echo $total;?></small>
+                        <caption>Número de registros retornados: <?php echo count($tickets);?></caption>
                     </td>
                 </tr>
             </tfoot>

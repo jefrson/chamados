@@ -33,7 +33,7 @@
         <tfoot>
             <tr>
                 <td colspan="9">
-                    <small>Número de registros retornados: <?php echo $regs;?></small>
+                    <caption>Número de registros retornados: <?php echo $regs;?></caption>
                 </td>
             </tr>
         </tfoot>

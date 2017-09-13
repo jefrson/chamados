@@ -6,15 +6,16 @@ class Andamento_model extends CI_Model{
     }
     
     function adicionar($objeto){
-        return $this->db->insert('andamento', $objeto);
+        $this->db->insert('andamento', $objeto);
+        return $this->db->affected_rows();
     }
     
     function listarTickets(){
-        $res = $this->db->query('select * from ticket');
-        if(!$this->db->query('select * from ticket')){
-            $er = $this->db->error();
-            return $er;
+        if($this->session->nivel){
+            $res = $this->db->query('SELECT * FROM ticket INNER JOIN usuario on ticket.solicitante = usuario.id_usuario WHERE usuario.nome ="'.$this->session->nome.'"');
+            return $res->result();
         }else{
+            $res = $this->db->get('ticket');
             return $res->result();
         }
     }
@@ -25,23 +26,23 @@ class Andamento_model extends CI_Model{
         if($limit){
             $this->db->limit($limit,$offset);
         }
-        
-        $res = $this->db->get('andamento');
-        if(!$this->db->get('andamento')){
-            $er = $this->db->error();
-            return $er;
+        if($this->session->nivel){
+            $res = $this->db->query('SELECT * FROM andamento INNER JOIN ticket ON andamento.id_ticket = ticket.id_ticket INNER JOIN usuario ON ticket.solicitante = usuario.id_usuario WHERE usuario.nome = "'.$this->session->nome.'"');
+            return $res->result();
         }else{
+            $res = $this->db->get('andamento');
             return $res->result();
         }
     }
     
     function totalReg(){
-        return $this->db->count_all_results('andamento');
+        return $this->db->count_all('andamento');
     }
             
     function alterar($dt){
         $this->db->where('id_ticket', $dt['id_ticket']);
-        return $this->db->update('andamento', $dt);
+        $this->db->update('andamento', $dt);
+        return $this->db->affected_rows();
     }
     
     function selecionarAndamento($id){

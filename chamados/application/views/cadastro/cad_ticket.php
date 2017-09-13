@@ -1,7 +1,7 @@
 <?php $this->load->view('./cabecalho') ?>
 <h4 class="card-header">Ticket</h4>
 <div class="card-body">
-    <form action="<?php echo site_url('ticket/adicionarTicket'); ?>" method="post">
+    <form action="<?php echo site_url('ticket/adicionarTicket'); ?>" method="post" enctype="multipart/form-data">
         <div class="form-row">
             <div class="form-check col-4">
                 <label class="form-check-label form-control-label">

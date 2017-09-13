@@ -36,7 +36,8 @@ class Ticket extends CI_Controller{
 
             $this->do_upload($obj->anexo);
 
-            $this->ticket_model->adicionar($obj); //Envia para o Model o objeto que vai ser cadastrado
+            $ins = $this->ticket_model->adicionar($obj); //Envia para o Model o objeto que vai ser cadastrado
+            
         }
         $this->load->view('cadastro/cad_ticket'); //Redireciona para a página 
     }
@@ -94,14 +95,23 @@ class Ticket extends CI_Controller{
     }
     
     private function do_upload($arq){
+        $path = "./uploads/".$arq;
+        
+        if(!is_dir($path)){
+            mkdir($path,0777,$recursive = TRUE);
+        }
         $config['upload_path'] = './uploads/';
-        $config['allowed_types'] = 'pdf|jpg|png|doc|xls';
+        $config['allowed_types'] = 'pdf|jpg|png|doc|xls|xml|rar|zip';
         $config['max_size'] = 100;
         $config['max_width'] = 1024;
         $config['max_height'] = 768;
         
         $this->upload->initialize($config);
-        $this->upload->do_upload($arq);
+        
+        if($this->upload->do_upload($arq)){
+            $dt['arquivos'] = $this->upload->data();
+            
+        }
     }
 
     function listarTicket(){
@@ -109,8 +119,7 @@ class Ticket extends CI_Controller{
         
         $v = array(
             'tickets' => $dt['tickets'],
-            'paginacao' => $dt['paginacao'],
-            'total' => $dt['total']
+            'paginacao' => $dt['paginacao']
         );
         
         $this->load->view('listagem/list_ticket', $v);
@@ -118,8 +127,15 @@ class Ticket extends CI_Controller{
     
     //Adiciona a paginação à tabela
     function paginacao(){
-        $dt['total'] = $this->ticket_model->totalReg(); //Total de registros
         $regPag = 6; //Registros por página        
+        
+        //Calcula o inicio da visualização dos registros
+        $offset = substr($this->uri->uri_string(3),15)*($regPag/2);
+        
+        //Busca os tickets com o limite $regPag e começando em $offset
+        $dt['tickets'] = $this->ticket_model->listar($regPag,$offset, ($this->session->nivel==FALSE)?TRUE:NULL);
+        
+        $total = count($dt); //Total de registros
         
         $pag = ceil($total/$regPag); //Calcula quantas páginas serão geradas
         
@@ -146,17 +162,11 @@ class Ticket extends CI_Controller{
             'num_tag_close' => '</li>',
             'attributes' => array('class' => 'page-link')
         );
-        
+                
         //Adiciona a configuração e cria os links
         $this->pagination->initialize($config);
-        $dt['paginacao'] = $this->pagination->create_links();
+        $dt['paginacao'] = $this->pagination->create_links();       
         
-        //Calcula o inicio da visualização dos registros
-        $offset = substr($this->uri->uri_string(3),15)*($regPag/2);
-        
-        //Busca os tickets com o limite $regPag e começando em $offset
-        $dt['tickets'] = $this->ticket_model->listar($regPag,$offset, ($this->session->nivel==FALSE)?TRUE:NULL);
-
         return $dt;
     }
 }

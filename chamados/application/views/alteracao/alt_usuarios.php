@@ -10,7 +10,7 @@
                 <label for="id" class="form-control-label">
                     ID
                 </label>
-                <input type="text" class="text-info form-control-plaintext" id="id" name="id" value="<?php echo $us->id_usuario; ?>" readonly>
+                <input type="text" class="text-info form-control-plaintext" id="id" name="id_usuario" value="<?php echo $us->id_usuario; ?>" readonly>
             </div>
             <div class="form-group col">
                 <label for="nome" class="form-control-label">

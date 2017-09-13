@@ -26,58 +26,56 @@
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" id="menu_cad" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Cadastros
+                                    Usuários
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="menu_cad" id="menu_cad">
                                     <?php if($this->session->nivel == FALSE): ?>
                                         <li class="dropdown-item">
-                                            <a class="nav-link" href="<?php echo site_url('cadastro_usuario'); ?>">Usuários</a>
+                                            <a class="nav-link" href="<?php echo site_url('cadastro_usuario'); ?>">Cadastro</a>
                                         </li>
                                     <?php endif; ?>
                                     <li class="dropdown-item">
-                                        <a class="nav-link" href="<?php echo site_url('cadastro_ticket'); ?>">Tickets</a>
+                                        <a class="nav-link" href="<?php echo site_url('listar_usuario'); ?>">Listar</a>
                                     </li>
                                     <li class="dropdown-item">
-                                        <a class="nav-link" href="<?php echo site_url('cadastro_andamento'); ?>">Andamento</a>
+                                        <a class="nav-link" href="<?php echo site_url('alterar_usuario'); ?>">Suas Informações</a>
                                     </li>
+                                    <?php if($this->session->nivel == FALSE): ?>
+                                        <li class="dropdown-item">
+                                            <a class="nav-link" href="<?php echo site_url('buscar_usuario'); ?>">Alterar</a>
+                                        </li>
+                                    <?php endif; ?>
                                 </ul>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link dropdown-toggle" id="menu_list" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Listagem
+                                    Tickets
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="menu_list" id="menu_list">
-                                    <?php if($this->session->nivel == FALSE): ?>
-                                        <li class="dropdown-item">
-                                            <a class="nav-link" href="<?php echo site_url('listar_usuario'); ?>">Usuários</a>
-                                        </li>
-                                    <?php endif;?>
                                     <li class="dropdown-item">
-                                        <a class="nav-link" href="<?php echo site_url('listar_ticket'); ?>">Tickets</a>
+                                        <a class="nav-link" href="<?php echo site_url('cadastro_ticket'); ?>">Cadastro</a>
                                     </li>
                                     <li class="dropdown-item">
-                                        <a class="nav-link" href="<?php echo site_url('listar_andamento'); ?>">Andamento</a>
+                                        <a class="nav-link" href="<?php echo site_url('listar_ticket'); ?>">Listar</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a class="nav-link" href="<?php echo site_url('alterar_ticket'); ?>">Alterar</a>
                                     </li>
                                 </ul>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link dropdown-toggle" id="menu_alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Alteração
+                                    Andamento
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="menu_alt" id="menu_alt">
                                     <li class="dropdown-item">
-                                        <a class="nav-link" href="<?php echo site_url('alterar_usuario'); ?>">Suas Informações</a>
-                                    </li>
-                                    <?php if($this->session->nivel == FALSE):?>
-                                        <li class="dropdown-item">
-                                            <a class="nav-link" href="<?php echo site_url('buscar_usuario'); ?>">Usuários</a>
-                                        </li>
-                                    <?php endif; ?>
-                                    <li class="dropdown-item">
-                                        <a class="nav-link" href="<?php echo site_url('alterar_ticket'); ?>">Tickets</a>
+                                        <a class="nav-link" href="<?php echo site_url('cadastro_andamento'); ?>">Cadastro</a>
                                     </li>
                                     <li class="dropdown-item">
-                                        <a class="nav-link" href="<?php echo site_url('alterar_andamento'); ?>">Andamento</a>
+                                        <a class="nav-link" href="<?php echo site_url('listar_andamento'); ?>">Listar</a>
+                                    </li>
+                                    <li class="dropdown-item">
+                                        <a class="nav-link" href="<?php echo site_url('alterar_andamento'); ?>">Alterar</a>
                                     </li>
                                 </ul>
                             </li>

@@ -6,7 +6,8 @@ class Usuario_model extends CI_Model {
     } 
     
     function adicionar($objeto){
-        return $this->db->insert('usuario', $objeto); 
+        $this->db->insert('usuario', $objeto);
+        return $this->db->affected_rows();
     }
     
     function listar($limit = null, $offset = null){
@@ -26,7 +27,8 @@ class Usuario_model extends CI_Model {
     
     function alterar($dt){
         $this->db->where('id_usuario', $dt['id_usuario']);
-        return $this->db->update('usuario', $dt);
+        $this->db->update('usuario', $dt);
+        return $this->db->affected_rows();
     }
     
     function selecionar($i){
