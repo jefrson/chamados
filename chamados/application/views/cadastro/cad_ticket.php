@@ -69,7 +69,7 @@
             <label for="assunto" class="form-control-label">
                 Assunto
             </label>
-            <textarea class="form-control <?php echo form_error('assunto')?"is-invalid":""?>" id="assunto" name="assunto" rows="1"><?php echo form_error('assunto')?set_value('assunto'):''; ?></textarea>
+            <textarea maxlenght="200" class="form-control <?php echo form_error('assunto')?"is-invalid":""?>" id="assunto" name="assunto" rows="1"><?php echo form_error('assunto')?set_value('assunto'):''; ?></textarea>
             <?php echo form_error('assunto'); ?>
         </div>
         <div class="form-group">
@@ -90,5 +90,8 @@
             <button class="btn btn-secondary" type="reset">Limpar</button>
         </div>
     </form>
+</div>
+<div class="card-footer">
+    
 </div>
 <?php $this->load->view('./rodape') ?>

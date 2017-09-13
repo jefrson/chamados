@@ -1,7 +1,7 @@
 <?php $this->load->view('./cabecalho') ?>
 <h4 class="card-header">Usuário</h4>
 <div class="card-body">
-    <form class="form" action="<?php echo site_url('usuario/adicionarUsuario'); ?>" method="post" class="">
+    <form class="form" action="<?php echo site_url('usuario/adicionarUsuario'); ?>" method="post">
         <div class="form-group">
             <label for="nome">
                 Nome
@@ -44,7 +44,7 @@
                 <label for="cpf">
                     CPF
                 </label>
-                <input class="form-control <?php echo form_error('cpf')?'is-invalid':''; ?>" id="cpf" minlength="11" type="text" placeholder="999.999.999-99" name="cpf" maxlength="14" value="<?php echo form_error('cpf')?set_value('cpf'):""; ?>">
+                <input class="form-control <?php echo form_error('cpf')?'is-invalid':''; ?>" id="cpf"  type="text" placeholder="999.999.999-99" name="cpf" maxlength="14" value="<?php echo form_error('cpf')?set_value('cpf'):""; ?>">
                 <?php echo form_error('cpf'); ?>
             </div>
         </div>
@@ -66,5 +66,8 @@
             <button class="btn btn-secondary" type="reset">Limpar</button>
         </div>
     </form>
+</div>
+<div class="card-footer">
+    
 </div>
 <?php $this->load->view('./rodape') ?>  

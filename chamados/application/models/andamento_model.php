@@ -6,12 +6,7 @@ class Andamento_model extends CI_Model{
     }
     
     function adicionar($objeto){
-        if(!$this->db->insert('andamento', $objeto)){
-            $er = $this->db->error();
-            return $er;
-        }else{
-            return $this->db->insert('andamento', $objeto);
-        }
+        return $this->db->insert('andamento', $objeto);
     }
     
     function listarTickets(){
@@ -24,9 +19,15 @@ class Andamento_model extends CI_Model{
         }
     }
     
-    function listar(){
-        $res = $this->db->query('select * from andamento');
-        if(!$this->db->query('select * from andamento')){
+    function listar($limit = null, $offset = null, $admin = null){
+        $this->db->order_by('id_andamento', 'asc');
+        
+        if($limit){
+            $this->db->limit($limit,$offset);
+        }
+        
+        $res = $this->db->get('andamento');
+        if(!$this->db->get('andamento')){
             $er = $this->db->error();
             return $er;
         }else{
@@ -34,6 +35,10 @@ class Andamento_model extends CI_Model{
         }
     }
     
+    function totalReg(){
+        return $this->db->count_all_results('andamento');
+    }
+            
     function alterar($dt){
         $this->db->where('id_ticket', $dt['id_ticket']);
         return $this->db->update('andamento', $dt);

@@ -6,12 +6,7 @@ class Ticket_model extends CI_Model{
     }
     
     function adicionar($objeto){
-        if(!$this->db->insert('ticket', $objeto)){
-            $er = $this->db->error();
-            return $er;
-        }else{
-            return $this->db->insert('ticket', $objeto);
-        }
+        return $this->db->insert('ticket', $objeto);
     }
     
     function listarUsuarios(){
@@ -24,9 +19,15 @@ class Ticket_model extends CI_Model{
         }
     }
     
-    function listar(){
-        $res = $this->db->query('select * from ticket');
-        if(!$this->db->query('select * from ticket')){
+    function listar($limit = null, $offset = null, $admin = NULL){
+        $this->db->order_by('id_ticket', 'asc');
+        
+        if($limit){
+            $this->db->limit($limit, $offset);
+        } 
+
+        $res = ($admin)?$this->db->get('ticket'):$this->db->get_where('ticket', array('solicitante' => $this->session->id_usuario));
+        if(!$this->db->get('ticket')){
             $er = $this->db->error();
             return $er;
         }else{
@@ -34,6 +35,10 @@ class Ticket_model extends CI_Model{
         }
     }
     
+    function totalReg(){
+        return $this->db->count_all_results('ticket');
+    }
+            
     function alterar($dt){
         $this->db->where('id_ticket', $dt['id_ticket']);
         return $this->db->update('ticket', $dt);

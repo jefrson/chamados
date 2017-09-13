@@ -37,11 +37,16 @@
             <tfoot>
                 <tr>
                     <td colspan="9">
-                        <small>Número de registros retornados:</small>
+                        <small>Número de registros retornados: <?php echo $total;?></small>
                     </td>
                 </tr>
             </tfoot>
         </table>
     </div>
+</div>
+<div class="card-footer">
+    <nav aria-label="Paginação">
+        <?php echo $paginacao; ?>
+    </nav>
 </div>
 <?php $this->load->view('./rodape'); ?>

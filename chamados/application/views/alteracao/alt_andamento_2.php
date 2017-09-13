@@ -35,5 +35,7 @@
         <a href="<?php echo site_url('alterar_andamento'); ?>">Clique aqui para voltar a busca</a>
    <?php endif; ?>
 </div>
-
+<div class="card-footer">
+    
+</div>
 <?php $this->load->view('./rodape'); ?>

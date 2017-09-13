@@ -13,4 +13,7 @@
         </div>
     </form>
 </div>
+<div class="card-footer">
+    
+</div>
 <?php $this->load->view('./rodape'); ?>

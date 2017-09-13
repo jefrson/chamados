@@ -105,13 +105,58 @@ class Ticket extends CI_Controller{
     }
 
     function listarTicket(){
-        $this->load->model('ticket_model');
-        $res = $this->ticket_model->listar();
+        $dt = $this->paginacao();
         
         $v = array(
-            'tickets' => $res
+            'tickets' => $dt['tickets'],
+            'paginacao' => $dt['paginacao'],
+            'total' => $dt['total']
         );
         
         $this->load->view('listagem/list_ticket', $v);
+    }
+    
+    //Adiciona a paginação à tabela
+    function paginacao(){
+        $dt['total'] = $this->ticket_model->totalReg(); //Total de registros
+        $regPag = 6; //Registros por página        
+        
+        $pag = ceil($total/$regPag); //Calcula quantas páginas serão geradas
+        
+        //Configuração da paginação
+        $config = array(
+            'base_url' => site_url().'/listar_tickets/',
+            'total_rows' => $total,
+            'per_page' => $regPag,
+            'num_links' => $pag,
+            'use_page_numbers' => TRUE,
+            'first_link' => 'Primeira',
+            'last_link' => 'Última',
+            'next_link' => 'Próxima',
+            'prev_link' => 'Anterior',
+            'full_tag_open' => '<ul class="pagination justify-content-center">',
+            'full_tag_close' => '</ul>',
+            'next_tag_open' => '<li class="page-item">',
+            'next_tag_close' => '</li>',
+            'prev_tag_open' => '<li class="page-item">',
+            'prev_tag_close' => '</li>',
+            'cur_tag_open' => '<li class="page-item active"><a class="page-link">',
+            'cur_tag_close' => '</a></li>',
+            'num_tag_open' => '<li class="page-item">',
+            'num_tag_close' => '</li>',
+            'attributes' => array('class' => 'page-link')
+        );
+        
+        //Adiciona a configuração e cria os links
+        $this->pagination->initialize($config);
+        $dt['paginacao'] = $this->pagination->create_links();
+        
+        //Calcula o inicio da visualização dos registros
+        $offset = substr($this->uri->uri_string(3),15)*($regPag/2);
+        
+        //Busca os tickets com o limite $regPag e começando em $offset
+        $dt['tickets'] = $this->ticket_model->listar($regPag,$offset, ($this->session->nivel==FALSE)?TRUE:NULL);
+
+        return $dt;
     }
 }

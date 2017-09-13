@@ -6,12 +6,7 @@ class Usuario_model extends CI_Model {
     } 
     
     function adicionar($objeto){
-        if(!$this->db->insert('usuario', $objeto)){
-            $er = $this->db->error();
-            return $er;
-        }else{
-            return $this->db->insert('usuario', $objeto);
-        }
+        return $this->db->insert('usuario', $objeto); 
     }
     
     function listar($limit = null, $offset = null){
@@ -31,17 +26,13 @@ class Usuario_model extends CI_Model {
     
     function alterar($dt){
         $this->db->where('id_usuario', $dt['id_usuario']);
-        return $this->db->update('usuario', $dt)?$this->db->update('usuario', $dt):$this->db->error();
+        return $this->db->update('usuario', $dt);
     }
     
     function selecionar($i){
         $res = $this->db->get_where('usuario',array('nome' => $i));
-        if(!$this->db->get_where('usuario',array('nome' => $i))){
-            $er = $this->db->error();
-            return $er;
-        }else{
-            return $res->result();
-        }
+        
+        return $res->result();
     }
     
     function totalReg(){

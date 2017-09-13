@@ -37,13 +37,59 @@ class Andamento extends CI_Controller{
     }
     
     function listarAndamento(){
-        $res = $this->andamento_model->listar();
+        $dt = $this->paginacao();
         
         $v =array(
-            'andamentos' => $res
+            'andamentos' => $dt['andamentos'],
+            'paginacao' => $dt['paginacao'],
+            'total' => $this->andamento_model->totalReg()
         );
         
         $this->load->view('listagem/list_andamento', $v);
+    }
+    
+     //Adiciona a paginação à tabela
+    function paginacao(){
+        $total = $this->andamento_model->totalReg(); //Total de registros
+        $regPag = 6; //Registros por página        
+        
+        $pag = ceil($total/$regPag); //Calcula quantas páginas serão geradas
+        
+        //Configuração da paginação
+        $config = array(
+            'base_url' => site_url().'/listar_andamentos/',
+            'total_rows' => $total,
+            'per_page' => $regPag,
+            'num_links' => $pag,
+            'use_page_numbers' => TRUE,
+            'first_link' => 'Primeira',
+            'last_link' => 'Última',
+            'next_link' => 'Próxima',
+            'prev_link' => 'Anterior',
+            'full_tag_open' => '<ul class="pagination justify-content-center">',
+            'full_tag_close' => '</ul>',
+            'next_tag_open' => '<li class="page-item">',
+            'next_tag_close' => '</li>',
+            'prev_tag_open' => '<li class="page-item">',
+            'prev_tag_close' => '</li>',
+            'cur_tag_open' => '<li class="page-item active"><a class="page-link">',
+            'cur_tag_close' => '</a></li>',
+            'num_tag_open' => '<li class="page-item">',
+            'num_tag_close' => '</li>',
+            'attributes' => array('class' => 'page-link')
+        );
+        
+        //Adiciona a configuração e cria os links
+        $this->pagination->initialize($config);
+        $dt['paginacao'] = $this->pagination->create_links();
+        
+        //Calcula o inicio da visualização dos registros
+        $offset = substr($this->uri->uri_string(3),18)*($regPag/2);
+        
+        //Busca os andamentos com o limite $regPag e começando em $offset
+        $dt['andamentos'] = $this->andamento_model->listar($regPag,$offset);
+        
+        return $dt;
     }
     
     function alterarAndamento(){

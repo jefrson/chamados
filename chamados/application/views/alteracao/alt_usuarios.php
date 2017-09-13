@@ -3,7 +3,7 @@
 <h4 class="card-header">Alteração de Usuário</h4>
 <div class="card-body">
     <?php if($usuario): ?>
-    <form action="<?php echo site_url('alterar_usuario'); ?>" method="post" class="">
+    <form action="<?php echo site_url('alterar_usuarios'); ?>" method="post">
         <?php foreach ($usuario as $us ): ?>        
         <div class="form-row">    
             <div class="form-group col-2">
@@ -74,8 +74,7 @@
         <?php endforeach; ?>
         <div class="controls">
             <button class="btn btn-primary" type="submit">Salvar</button>
-            <button class="btn btn-secondary" type="reset" class="">Cancelar</button>
-            <a href="<?php echo site_url('buscar_usuarios'); ?>" class="btn btn-light">Voltar</a>
+            <a href="<?php echo site_url('buscar_usuarios'); ?>" class="btn btn-light">Cancelar</a>
         </div>
     </form>
     <?php else: ?>
@@ -83,5 +82,7 @@
         <a href="<?php echo site_url('buscar_usuarios'); ?>">Clique aqui para voltar</a>
     <?php endif; ?>
 </div>
-
+<div class="card-footer">
+    
+</div>
 <?php $this->load->view('./rodape'); ?>

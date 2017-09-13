@@ -56,22 +56,14 @@ class Usuario extends CI_Controller{
             $this->load->view('alteracao/alt_usuarios', $v); //Redireciona para a página e envia o vetor 'usuario' 
         }
     }
-    
-    function alteraUsuario(){
-        $this->load->view('alteracao/alt_usuario');
-    }
 
     //Altera os dados do usuário
     function alterarUsuario(){
-        //Pega o id do usuário pelo input ou pela sessão
-        $id = $this->input->post('id_usuario')?$this->input->post('id_usuario'):$this->session->id_usuario; 
-        
         $nivel = $this->input->post('nivel');
         $cpf = $this->input->post('cpf');
-        $nome = $this->input->post('nome');
         
         $dt = array(
-            'id_usuario' => $id,
+            'id_usuario' => $this->input->post('id_usuario'),
             'nome' => $this->input->post('nome'),
             'id_setor' => $this->input->post('id_setor'),
             'id_cargo' => $this->input->post('id_cargo'),
@@ -84,23 +76,89 @@ class Usuario extends CI_Controller{
         );
         
         $this->usuario_model->alterar($dt);
-
+        
         $this->load->view('alteracao/alt_usuario');
+    }
+    
+    function alterarUsuarios(){ 
+        $nivel = $this->input->post('nivel');
+        $cpf = $this->input->post('cpf');
+        
+        $dt = array(
+            'id_usuario' => $this->input->post('id_usuario'),
+            'nome' => $this->input->post('nome'),
+            'id_setor' => $this->input->post('id_setor'),
+            'id_cargo' => $this->input->post('id_cargo'),
+            'id_secretaria' => $this->input->post('id_secretaria'),
+            'matricula' => $this->input->post('matricula'),
+            'cpf' => $cpf,
+            'email' => $this->input->post('email'),
+            'nivel' => isset($nivel)?TRUE:FALSE,
+            'senha' => md5($cpf)
+        );
+        
+        $this->usuario_model->alterar($dt);
+        
+        $this->load->view('alteracao/buscar_usuario');
     }
     
     //Exibe uma lista em forma de tabela dos usuários cadastrados
     function listarUsuario(){
-        
-        $usuarios = $this->usuario_model->listar(3);
+        $dt = $this->paginacao();
                
         $u = array(
-            'usuarios' => $usuarios,
-            'regs' => $this->usuario_model->totalReg()
+            'usuarios' => $dt['usuarios'],
+            'regs' => $this->usuario_model->totalReg(),
+            'paginacao' => $dt['paginacao']
         );
         
         $this->load->view('listagem/list_usuario', $u);
     }
     
+    //Adiciona a paginação à tabela
+    function paginacao(){
+        $total = $this->usuario_model->totalReg(); //Total de registros
+        $regPag = 6; //Registros por página        
+        
+        $pag = ceil($total/$regPag); //Calcula quantas páginas serão geradas
+        
+        //Configuração da paginação
+        $config = array(
+            'base_url' => site_url().'/listar_usuarios/',
+            'total_rows' => $total,
+            'per_page' => $regPag,
+            'num_links' => $pag,
+            'use_page_numbers' => TRUE,
+            'first_link' => 'Primeira',
+            'last_link' => 'Última',
+            'next_link' => 'Próxima',
+            'prev_link' => 'Anterior',
+            'full_tag_open' => '<ul class="pagination justify-content-center">',
+            'full_tag_close' => '</ul>',
+            'next_tag_open' => '<li class="page-item">',
+            'next_tag_close' => '</li>',
+            'prev_tag_open' => '<li class="page-item">',
+            'prev_tag_close' => '</li>',
+            'cur_tag_open' => '<li class="page-item active"><a class="page-link">',
+            'cur_tag_close' => '</a></li>',
+            'num_tag_open' => '<li class="page-item">',
+            'num_tag_close' => '</li>',
+            'attributes' => array('class' => 'page-link')
+        );
+        
+        //Adiciona a configuração e cria os links
+        $this->pagination->initialize($config);
+        $dt['paginacao'] = $this->pagination->create_links();
+        
+        //Calcula o inicio da visualização dos registros
+        $offset = substr($this->uri->uri_string(3),16)*($regPag/2);
+        
+        //Busca os usuários com o limite $regPag e começando em $offset
+        $dt['usuarios'] = $this->usuario_model->listar($regPag,$offset);
+        
+        return $dt;
+    }
+
     //Valida os campos preenchidos no formulário
     private function validar(){
         

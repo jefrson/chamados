@@ -1,7 +1,8 @@
 <?php $this->load->view('./cabecalho'); ?>
 <h4 class="card-header">Alteração de Usuário</h4>
 <div class="card-body">
-    <?php $nome = $this->session->nome;
+    <?php 
+        $nome = $this->session->nome;
         $users = $this->usuario_model->selecionar($nome);
     ?>
     <?php if($users): ?>
@@ -12,7 +13,7 @@
                 <label for="id" class="form-control-label">
                     ID
                 </label>
-                <input type="text" class="text-info bg-light form-control-plaintext" id="id" name="id" value="<?php echo $this->session->id_usuario; ?>" readonly>
+                <input type="text" class="text-info bg-light form-control-plaintext" id="id" name="id" value="<?php echo $us->id_usuario; ?>" readonly>
             </div>
             <div class="form-group col">
                 <label for="nome" class="form-control-label">
@@ -82,5 +83,8 @@
     <?php else: ?>
         <p>Nenhum dado encontrado para este usuário!</p>
     <?php endif; ?>
+</div>
+<div class="card-footer">
+    
 </div>
 <?php $this->load->view('./rodape'); ?>
