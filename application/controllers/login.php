@@ -30,9 +30,10 @@ class Login extends CI_Controller{
                 $this->session->logado = TRUE;
             }
             
-            $this->load->view('cadastro/cad_ticket');
+            $this->load->view('login/sucesso');
         }else{
             $this->load->view('login/login');
+            $this->load->view('login/falha');
         }
     }
     

@@ -20,9 +20,17 @@ class Andamento extends CI_Controller{
             $obj->mensagem = $this->input->post('mensagem');
             $obj->data_hora = $this->input->post('data_hora');
 
-            $this->andamento_model->adicionar($obj);
+            $adc = $this->andamento_model->adicionar($obj);
+            if($adc == 1){
+                $this->load->view('cadastro/sucesso');
+                //$this->load->view('cadastro/cad_andamento');
+            }else{
+                $this->load->view('cadastro/falha');
+                $this->load->view('cadastro/cad_andamento');
+            }
+        }else{
+            $this->load->view('cadastro/cad_andamento');
         }
-        $this->load->view('cadastro/cad_andamento');
     }
     
     function listarTickets(){
@@ -50,14 +58,8 @@ class Andamento extends CI_Controller{
      //Adiciona a paginação à tabela
     function paginacao(){
         $regPag = 6; //Registros por página
-        //
-        //Calcula o inicio da visualização dos registros
-        $offset = substr($this->uri->uri_string(3),18)*($regPag/2);
         
-        //Busca os andamentos com o limite $regPag e começando em $offset
-        $dt['andamentos'] = $this->andamento_model->listar($regPag,$offset);
-        
-        $total = count($dt); //Total de registros
+        $total = $this->andamento_model->totalReg(); //Total de registros
 
         $pag = ceil($total/$regPag); //Calcula quantas páginas serão geradas
         
@@ -88,7 +90,14 @@ class Andamento extends CI_Controller{
         //Adiciona a configuração e cria os links
         $this->pagination->initialize($config);
         $dt['paginacao'] = $this->pagination->create_links();
-                
+               
+        //Calcula o inicio da visualização dos registros
+        $offset = substr($this->uri->uri_string(3),18)*($regPag/2);
+        
+        //Busca os andamentos com o limite $regPag e começando em $offset
+        $dt['andamentos'] = $this->andamento_model->listar($regPag,ceil($offset));
+        
+        
         return $dt;
     }
     

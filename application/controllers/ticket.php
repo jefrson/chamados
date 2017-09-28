@@ -23,7 +23,7 @@ class Ticket extends CI_Controller{
             $obj->responsavel = $this->input->post('responsavel');
             $obj->mensagem = $this->input->post('mensagem');
             $obj->assunto = $this->input->post('assunto');
-            $obj->anexo = $this->input->post('anexo');
+            $obj->anexo = $_FILES['anexo']['name'];
             $obj->data_inicial = $this->input->post('data_inicial');
             $obj->data_final = $this->input->post('data_final');
             $obj->solicitante = $_SESSION['id_usuario'];
@@ -34,12 +34,19 @@ class Ticket extends CI_Controller{
                 $obj->ativo = FALSE;    
             }
 
-            $this->do_upload($obj->anexo);
+            $up = $this->do_upload($_FILES['anexo']);
 
-            $ins = $this->ticket_model->adicionar($obj); //Envia para o Model o objeto que vai ser cadastrado
-            
+            $adc = $this->ticket_model->adicionar($obj); //Envia para o Model o objeto que vai ser cadastrado
+            if($adc == 1){
+                //$this->load->view('cadastro/cad_ticket');
+                $this->load->view('cadastro/sucesso');
+            }else{
+                $this->load->view('cadastro/cad_ticket');
+                $this->load->view('cadastro/falha');
+            }
+        }else{
+            $this->load->view('cadastro/cad_ticket'); //Redireciona para a página 
         }
-        $this->load->view('cadastro/cad_ticket'); //Redireciona para a página 
     }
     
     function buscarTicket(){
@@ -95,22 +102,20 @@ class Ticket extends CI_Controller{
     }
     
     private function do_upload($arq){
-        $path = "./uploads/".$arq;
+        $pasta = "./uploads/";
+        $lista = array('image/jpg', 'image/png', 'image/jpeg', 'application/msword', 
+            'application/pdf', 'application/zip', 'application/rar', 'application/vnd.ms-excel', 
+            'application/vnd.ms-powerpoint','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'application/vnd.openxmlformats-officedocument.presentationml.presentation');
         
-        if(!is_dir($path)){
-            mkdir($path,0777,$recursive = TRUE);
-        }
-        $config['upload_path'] = './uploads/';
-        $config['allowed_types'] = 'pdf|jpg|png|doc|xls|xml|rar|zip';
-        $config['max_size'] = 100;
-        $config['max_width'] = 1024;
-        $config['max_height'] = 768;
-        
-        $this->upload->initialize($config);
-        
-        if($this->upload->do_upload($arq)){
-            $dt['arquivos'] = $this->upload->data();
-            
+        if($arq['error'] == 0){
+            if(array_search($pasta, $lista)){
+                $up = move_uploaded_file($arq['tmp_name'], $pasta.$arq['name']);
+                return $up;
+            }else{
+                $error = 'Tipo de arquivo inválido';
+                return $error;
+            }
         }
     }
 
@@ -127,15 +132,9 @@ class Ticket extends CI_Controller{
     
     //Adiciona a paginação à tabela
     function paginacao(){
-        $regPag = 6; //Registros por página        
-        
-        //Calcula o inicio da visualização dos registros
-        $offset = substr($this->uri->uri_string(3),15)*($regPag/2);
-        
-        //Busca os tickets com o limite $regPag e começando em $offset
-        $dt['tickets'] = $this->ticket_model->listar($regPag,$offset, ($this->session->nivel==FALSE)?TRUE:NULL);
-        
-        $total = count($dt); //Total de registros
+        $regPag = 5; //Registros por página        
+                
+        $total = $this->ticket_model->totalReg(); //Total de registros retornados da consulta
         
         $pag = ceil($total/$regPag); //Calcula quantas páginas serão geradas
         
@@ -167,6 +166,16 @@ class Ticket extends CI_Controller{
         $this->pagination->initialize($config);
         $dt['paginacao'] = $this->pagination->create_links();       
         
+        //Calcula o inicio da visualização dos registros
+        $offset = substr($this->uri->uri_string(3),15)*($regPag/2);
+        
+        //Busca os tickets com o limite $regPag e começando em $offset
+        $dt['tickets'] = $this->ticket_model->listar($regPag,ceil($offset), (!$this->session->nivel)?TRUE:NULL);
+        
         return $dt;
+    }
+    
+    function chamado($dados){
+        
     }
 }

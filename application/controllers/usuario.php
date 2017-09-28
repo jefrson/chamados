@@ -36,9 +36,16 @@ class Usuario extends CI_Controller{
             }
 
             $adc = $this->usuario_model->adicionar($obj); //Envia para o Model o objeto que vai ser cadastrado
+            if($adc == 1){
+                //$this->load->view('cadastro/cad_usuario'); //Redireciona para a página
+                $this->load->view('cadastro/sucesso'); //Carrega o modal de sucesso
+            }else{
+                $this->load->view('cadastro/cad_usuario'); //Redireciona para a página
+                $this->load->view('cadastro/falha'); //Carrega o modal de falha
+            }
+        }else{
+            $this->load->view('cadastro/cad_usuario'); //Redireciona para a página  
         }
-        $this->load->view('cadastro/cad_usuario'); //Redireciona para a página
-        
     }
     
     //Busca o usuário pelo nome inserido

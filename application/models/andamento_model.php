@@ -36,7 +36,13 @@ class Andamento_model extends CI_Model{
     }
     
     function totalReg(){
-        return $this->db->count_all('andamento');
+        if($this->session->nivel){
+            $res = $this->db->query('SELECT * FROM andamento INNER JOIN ticket ON andamento.id_ticket = ticket.id_ticket INNER JOIN usuario ON ticket.solicitante = usuario.id_usuario WHERE usuario.nome = "'.$this->session->nome.'"');
+        }else{
+            $res = $this->db->get('andamento');
+        }
+        
+        return $res->num_rows();
     }
             
     function alterar($dt){
@@ -46,6 +52,8 @@ class Andamento_model extends CI_Model{
     }
     
     function selecionarAndamento($id){
+        $this->db->order_by('data_hora', 'desc');
+        $this->db->limit(1);
         $res = $this->db->get_where('andamento',array('id_ticket' => $id));
         if(!$this->db->get_where('andamento',array('id_ticket' => $id))){
             $er = $this->db->error();

@@ -11,7 +11,7 @@ class Login_model extends CI_Model{
         $logar = $this->db->query($sql)->result();
         if($this->db->query($sql)){
             foreach ($logar as $l){
-                if($l->matricula == $login || $l->senha == $senha){
+                if($l->matricula == $login && $l->senha == $senha){
                     return TRUE;
                 }
             }        

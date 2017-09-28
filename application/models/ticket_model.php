@@ -37,7 +37,13 @@ class Ticket_model extends CI_Model{
     }
     
     function totalReg(){
-        return $this->db->count_all('ticket');
+        if($this->session->nivel){
+            $res = $this->db->get_where('ticket', array('solicitante' => $this->session->id_usuario));
+        }else{
+            $res = $this->db->get('ticket');
+        }
+        
+        return $res->num_rows();
     }
             
     function alterar($dt){

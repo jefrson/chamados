@@ -62,7 +62,7 @@
             </label>
         </div>
         <div class="controls">
-            <button class="btn btn-primary" type="submit">Adicionar</button>
+            <button class="btn btn-primary" type="submit" id="add">Adicionar</button>
             <button class="btn btn-secondary" type="reset">Limpar</button>
         </div>
     </form>

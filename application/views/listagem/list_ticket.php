@@ -7,7 +7,9 @@
             <thead class="thead-default">
                 <tr>
                     <th>Ticket</th>
-                    <th>Solicitante</th>
+                    <?php if($this->session->nivel == FALSE): ?>
+                        <th>Solicitante</th>
+                    <?php endif; ?>
                     <th>Categoria</th>
                     <th>Urgência</th>
                     <th>Responsável</th>
@@ -21,7 +23,9 @@
                     <?php if($t->ativo):?>
                         <tr>
                             <td><?php echo $t->id_ticket; ?></td>
-                            <td><?php echo $t->solicitante; ?></td>
+                            <?php if($this->session->nivel == FALSE): ?>
+                                <td><?php echo $t->solicitante; ?></td>
+                            <?php endif; ?>
                             <td><?php echo $t->id_categoria; ?></td>
                             <td><?php echo $t->urgencia; ?></td>
                             <td><?php echo $t->responsavel; ?></td>
