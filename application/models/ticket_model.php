@@ -63,6 +63,6 @@ class Ticket_model extends CI_Model{
     }
     
     function selecionarId(){
-        return $this->db->query('select LAST_INSERT_ID()');
+        return $this->db->query('select LAST_INSERT_ID()')->row_array();
     }
 }

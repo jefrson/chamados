@@ -19,7 +19,7 @@
         <div class="row">
             <header class="col">
                 <nav class="navbar navbar-expand-md fixed-top navbar-light bg-light">
-                    <a class="navbar-brand" href="<?php echo site_url('cadastro_ticket'); ?>"><img alt="Brasão Arapoti" src="<?php echo site_url(''); ?>"></a>
+                    <a class="navbar-brand" href="<?php echo site_url('cadastro_ticket'); ?>"><img height="45" alt="Brasão Arapoti" src="<?php echo base_url('/public/imagens/brasaoarapoti.jpg');?>">Prefeitura Municipal de Arapoti</a>
                                                          
                     <div class="collapse navbar-collapse mr-auto" id="menu">
                         <ul class="navbar-nav mr-auto">

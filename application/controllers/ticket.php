@@ -44,7 +44,6 @@ class Ticket extends CI_Controller{
             if($adc == 1 && $this->abrirChamado($dados)){
                 //$this->load->view('cadastro/cad_ticket');
                 $this->load->view('cadastro/sucesso');
-                $this->load->view('email/email', $dados);
             }else{
                 $this->load->view('cadastro/cad_ticket');
                 $this->load->view('cadastro/falha');
@@ -189,7 +188,7 @@ class Ticket extends CI_Controller{
         
         //Pega os dados do usuário que esta abrindo o chamado
         $nome = $this->session->nome;
-        $email = $this->session->email;
+        $email = 'jeffalmd4@outlook.com';
         
         $dt['id_ticket'] = $this->ticket_model->selecionarId();
         $dt['nome'] = $nome;
@@ -201,14 +200,15 @@ class Ticket extends CI_Controller{
             
     function abrirChamado($dados){
         $config['protocol'] = 'smtp';
+        $config['smtp_crypto'] = 'tls';
         $config['wordwrap'] = TRUE;
         $config['validate'] = TRUE;
-        $config['smtp_host'] = 'ssl://smtp.gmail.com';
-        $config['smtp_user'] = 'jeffalmd3@gmail.com';
-        $config['mailtype'] = 'html';
-        $config['charset'] = 'utf-8'; 
-        $config['smtp_port'] = 465;
-        $config['newline'] = "\r\n";
+        $config['smtp_host'] = 'mail.arapoti.pr.gov.br';
+        $config['smtp_user'] = 'suporte@arapoti.pr.gov.br';
+        $config['smtp_pass'] = 'Arapoti@2017';
+        $config['mailtype'] = 'text';
+        $config['smtp_port'] = '587';
+        $config['newline'] = "\r\n";        
         
         $this->email->initialize($config);
         
