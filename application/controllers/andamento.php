@@ -17,7 +17,7 @@ class Andamento extends CI_Controller{
         if($this->form_validation->run()){
             $obj = new stdClass;
             $obj->id_ticket = $this->input->post('id_ticket');
-            $obj->mensagem = $this->input->post('mensagem');
+            $obj->mensagem = $this->input->post('and_mensagem');
             $obj->data_hora = $this->input->post('data_hora');
 
             $adc = $this->andamento_model->adicionar($obj);
@@ -105,7 +105,7 @@ class Andamento extends CI_Controller{
         
         $dt = array(
             'id_ticket' => $this->input->post('id_ticket'),
-            'mensagem' => $this->input->post('mensagem'),
+            'mensagem' => $this->input->post('and_mensagem'),
             'data_hora' => $this->input->post('data_hora')
         );
         
@@ -127,7 +127,7 @@ class Andamento extends CI_Controller{
     
     function validar(){
         $this->form_validation->set_rules('id_ticket', 'Ticket', 'trim|required');
-        $this->form_validation->set_rules('mensagem', 'Mensagem', 'trim|required');
+        $this->form_validation->set_rules('and_mensagem', 'Mensagem', 'trim|required');
         $this->form_validation->set_rules('data_hora', 'Data/Hora', 'trim|required');
         
         $this->form_validation->set_message('required', 'O campo %s é obrigatório!');

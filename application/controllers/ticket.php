@@ -8,6 +8,7 @@ class Ticket extends CI_Controller{
         parent::__construct();
         
         $this->load->model('ticket_model');
+        $this->load->model('usuario_model');
     }
     
     //Adiciona um Ticket
@@ -37,9 +38,13 @@ class Ticket extends CI_Controller{
             $up = $this->do_upload($_FILES['anexo']);
 
             $adc = $this->ticket_model->adicionar($obj); //Envia para o Model o objeto que vai ser cadastrado
-            if($adc == 1){
+            
+            $dados = $this->dadosEnvio($obj);
+            
+            if($adc == 1 && $this->abrirChamado($dados)){
                 //$this->load->view('cadastro/cad_ticket');
                 $this->load->view('cadastro/sucesso');
+                $this->load->view('email/email', $dados);
             }else{
                 $this->load->view('cadastro/cad_ticket');
                 $this->load->view('cadastro/falha');
@@ -175,7 +180,47 @@ class Ticket extends CI_Controller{
         return $dt;
     }
     
-    function chamado($dados){
+    function dadosEnvio($obj){
+        //Pega os dados inseridos no formulário do ticket
+        $dt['mensagem'] = $obj->mensagem;
+        $dt['assunto'] = $obj->assunto;
+        $dt['anexo'] = $obj->anexo;
+        $dt['responsavel'] = $obj->responsavel;
         
+        //Pega os dados do usuário que esta abrindo o chamado
+        $nome = $this->session->nome;
+        $email = $this->session->email;
+        
+        $dt['id_ticket'] = $this->ticket_model->selecionarId();
+        $dt['nome'] = $nome;
+        $dt['email'] = $email;
+        $dt['destino'] = 'jeffalmd3@gmail.com';
+        
+        return $dt;
+    }
+            
+    function abrirChamado($dados){
+        $config['protocol'] = 'smtp';
+        $config['wordwrap'] = TRUE;
+        $config['validate'] = TRUE;
+        $config['smtp_host'] = 'ssl://smtp.gmail.com';
+        $config['smtp_user'] = 'jeffalmd3@gmail.com';
+        $config['mailtype'] = 'html';
+        $config['charset'] = 'utf-8'; 
+        $config['smtp_port'] = 465;
+        $config['newline'] = "\r\n";
+        
+        $this->email->initialize($config);
+        
+        $this->email->from($dados['email'], $dados['nome']);
+        $this->email->to($dados['destino'], $dados['email']);
+        $this->email->subject($dados['assunto']);
+        $this->email->message($dados['mensagem']);
+        $this->email->attach($dados['anexo']);
+        
+        if($this->email->send()){
+            return TRUE;
+        }
+        return FALSE;
     }
 }

@@ -27,6 +27,7 @@ class Login extends CI_Controller{
                 $this->session->id_usuario = $li->id_usuario;
                 $this->session->nome = $li->nome;
                 $this->session->nivel = $li->nivel;
+                $this->session->email = $li->email;
                 $this->session->logado = TRUE;
             }
             
