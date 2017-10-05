@@ -9,6 +9,7 @@ class Ticket extends CI_Controller{
         
         $this->load->model('ticket_model');
         $this->load->model('usuario_model');
+        $this->load->library('phpmailer_library');
     }
     
     //Adiciona um Ticket
@@ -35,13 +36,11 @@ class Ticket extends CI_Controller{
                 $obj->ativo = FALSE;    
             }
 
-            $up = $this->do_upload($_FILES['anexo']);
+            //$up = $this->do_upload($_FILES['anexo']);
 
-            $adc = $this->ticket_model->adicionar($obj); //Envia para o Model o objeto que vai ser cadastrado
-            
-            $dados = $this->dadosEnvio($obj);
-            
-            if($adc == 1 && $this->abrirChamado($dados)){
+            //Envia para o Model o objeto que vai ser cadastrado e
+            //Verifica e foi adicionado com sucesso
+            if($this->ticket_model->adicionar($obj) == 1 && $this->abrirChamado($obj)){
                 //$this->load->view('cadastro/cad_ticket');
                 $this->load->view('cadastro/sucesso');
             }else{
@@ -136,7 +135,7 @@ class Ticket extends CI_Controller{
     
     //Adiciona a paginação à tabela
     function paginacao(){
-        $regPag = 5; //Registros por página        
+        $regPag = 10; //Registros por página        
                 
         $total = $this->ticket_model->totalReg(); //Total de registros retornados da consulta
         
@@ -179,48 +178,46 @@ class Ticket extends CI_Controller{
         return $dt;
     }
     
-    function dadosEnvio($obj){
-        //Pega os dados inseridos no formulário do ticket
-        $dt['mensagem'] = $obj->mensagem;
-        $dt['assunto'] = $obj->assunto;
-        $dt['anexo'] = $obj->anexo;
-        $dt['responsavel'] = $obj->responsavel;
+    function ultimoId(){
+        $ids = $this->ticket_model->selecionarId();
         
-        //Pega os dados do usuário que esta abrindo o chamado
-        $nome = $this->session->nome;
-        $email = 'jeffalmd4@outlook.com';
-        
-        $dt['id_ticket'] = $this->ticket_model->selecionarId();
-        $dt['nome'] = $nome;
-        $dt['email'] = $email;
-        $dt['destino'] = 'jeffalmd3@gmail.com';
-        
-        return $dt;
+        foreach ($ids as $id){        
+            return $id->id_ticket;
+        }
     }
             
     function abrirChamado($dados){
-        $config['protocol'] = 'smtp';
-        $config['smtp_crypto'] = 'tls';
-        $config['wordwrap'] = TRUE;
-        $config['validate'] = TRUE;
-        $config['smtp_host'] = 'mail.arapoti.pr.gov.br';
-        $config['smtp_user'] = 'suporte@arapoti.pr.gov.br';
-        $config['smtp_pass'] = 'Arapoti@2017';
-        $config['mailtype'] = 'text';
-        $config['smtp_port'] = '587';
-        $config['newline'] = "\r\n";        
+        $msg = $this->msg($dados);
+        $dados->msg = $msg;
+        $dados->nome = $this->session->nome;
+        $dados->email = $this->session->email;
         
-        $this->email->initialize($config);
-        
-        $this->email->from($dados['email'], $dados['nome']);
-        $this->email->to($dados['destino'], $dados['email']);
-        $this->email->subject($dados['assunto']);
-        $this->email->message($dados['mensagem']);
-        $this->email->attach($dados['anexo']);
-        
-        if($this->email->send()){
+        if($this->phpmailer_library->send($dados)){
             return TRUE;
         }
         return FALSE;
+    }
+    
+    private function msg($dt){
+        return "<body>
+        <div>
+            <p>Chamado aberto por: ".$this->session->nome."</p>
+            <p>Segue abaixo as informações do chamado:</p>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Mensagem</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>".$this->ultimoId()."</td>
+                    <td>".$dt->mensagem."</td>
+                </tr>
+            </tbody>
+        </table>
+    </body>";
     }
 }

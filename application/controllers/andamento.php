@@ -20,8 +20,7 @@ class Andamento extends CI_Controller{
             $obj->mensagem = $this->input->post('and_mensagem');
             $obj->data_hora = $this->input->post('data_hora');
 
-            $adc = $this->andamento_model->adicionar($obj);
-            if($adc == 1){
+            if($this->andamento_model->adicionar($obj) == 1){
                 $this->load->view('cadastro/sucesso');
                 //$this->load->view('cadastro/cad_andamento');
             }else{
@@ -131,5 +130,41 @@ class Andamento extends CI_Controller{
         $this->form_validation->set_rules('data_hora', 'Data/Hora', 'trim|required');
         
         $this->form_validation->set_message('required', 'O campo %s é obrigatório!');
+    }
+    
+    function alterarChamado($dados){
+        $msg = $this->msg($dados);
+        $dados->msg = $msg;
+        $dados->nome = $this->session->nome;
+        $dados->email = $this->session->email;
+        $dados->assunto = "Ateração do ticket ".$dados->id_ticket;
+        
+        if($this->phpmailer_library->send($dados)){
+            return TRUE;
+        }
+        return FALSE;
+    }
+    
+    private function msg($dt){
+        return "<body>
+        <div>
+            <p>Chamado alterado por: ".$this->session->nome."</p>
+            <p>Segue abaixo as informações do chamado:</p>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <td>ID</td>
+                    <td>Mensagem</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>".$dt->id_ticket."</td>
+                    <td>".$dt->mensagem."</td>
+                </tr>
+            </tbody>
+        </table>
+    </body>";
     }
 }
