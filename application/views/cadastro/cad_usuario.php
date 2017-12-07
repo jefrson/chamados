@@ -56,9 +56,10 @@
             <?php echo form_error('email'); ?>
         </div>
         <div class="form-check">
-            <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" checked="checked" name="nivel">
-                Usuário
+            <label class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" checked="checked" name="nivel">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Usuário</span>
             </label>
         </div>
         <div class="controls">

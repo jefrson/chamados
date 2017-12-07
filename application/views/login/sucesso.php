@@ -20,7 +20,7 @@
                     </div>
                     <div class="modal-body">
                         <p>Login concluído com sucesso!</p>
-                        <p>Bem vindo <?php echo $this->session->nome;?>!</p>
+                        <p>Bem vindo <?php echo ucfirst($this->session->nome);?>!</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>
@@ -28,10 +28,13 @@
                 </div>
             </div>
         </div>
-
         <script>
             $('#sucesso').modal('show');
             $('#sucesso').on('hidden.bs.modal', function(){
-                $(location).attr('href', "<?php echo site_url('cadastro_ticket'); ?>");
+                <?php if($this->session->nivel): ?>
+                    $(location).attr('href', "<?php echo site_url('cadastro_ticket'); ?>");
+                <?php else: ?>
+                    $(location).attr('href', "<?php echo site_url('listar_tickets'); ?>");
+                <?php endif; ?>
             });
         </script>

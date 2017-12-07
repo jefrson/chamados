@@ -79,6 +79,7 @@ $route['sair'] = 'login/logOut';
 $route['listar_usuarios/(:num)'] = 'usuario/listarUsuario';
 $route['listar_tickets/(:num)'] = 'ticket/listarTicket';
 $route['listar_andamentos/(:num)'] = 'andamento/listarAndamento';
+$route['editar_andamento'] = 'andamento/editarAndamento';
 $route['default_controller'] = 'Welcome';
 $route['404_override'] = 'errors/html/error_404';
 $route['translate_uri_dashes'] = FALSE;

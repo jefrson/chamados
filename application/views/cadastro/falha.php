@@ -15,6 +15,7 @@
         </style>
     </head>
     <body class="container-fluid">
+
         <div class="modal fade" id="falha" tabindex="-1" role="dialog" aria-labelledby="falha" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">

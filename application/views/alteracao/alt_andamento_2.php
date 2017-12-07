@@ -15,7 +15,7 @@
             <label for="mensagem" class="form-control-label">
                 Mensagem
             </label>
-            <textarea id="mensagem" name="mensagem" class="form-control"><?php echo $a->mensagem; ?></textarea>
+            <textarea id="mensagem" name="and_mensagem" class="form-control"><?php echo $a->and_mensagem; ?></textarea>
         </div>
         <div class="form-group">
             <label for="data_hora" class="form-control-label">

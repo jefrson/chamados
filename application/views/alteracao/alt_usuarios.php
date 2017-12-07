@@ -60,15 +60,10 @@
             <input type="email" class="form-control" id="email" name="email" value="<?php echo $us->email; ?>">
         </div>
         <div class="form-check">
-            <label for="usuario" class="form-check-label"> 
-                <?php 
-                    if($us->nivel == 1){
-                        echo "<input class='form-check-input' type='checkbox' name='nivel' checked='checked'>";
-                    }else{
-                        echo "<input class='form-check-input' type='checkbox' name='nivel'>";
-                    }
-                ?>
-                Usuário
+            <label class="custom-control custom-checkbox">
+                <input class="custom-control-input" type="checkbox" <?php echo ($us->nivel == 1)?'checked="checked"':""?> name="nivel">
+                <span class="custom-control-indicator"></span>
+                <span class="custom-control-description">Usuário</span>
             </label>
         </div>
         <?php endforeach; ?>

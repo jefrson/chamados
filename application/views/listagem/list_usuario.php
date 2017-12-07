@@ -1,7 +1,7 @@
 <?php $this->load->view('./cabecalho'); ?>
 <h4 class="card-header">Listagem de Usuários</h4>
 <div class="card-body">
-    <table class="table table-responsive table-striped table-hover">
+    <table class="table table-sm table-responsive table-hover table-bordered">
         <thead class="thead-default">
             <tr>
                 <th>ID</th>
@@ -19,7 +19,7 @@
             <?php foreach ($usuarios as $us): ?>
             <tr>
                 <td><?php echo $us->id_usuario; ?></td>
-                <td><?php echo $us->nome; ?></td>
+                <td><?php echo ucfirst($us->nome); ?></td>
                 <td><?php echo $us->id_setor; ?></td>
                 <td><?php echo $us->id_cargo; ?></td>
                 <td><?php echo $us->id_secretaria; ?></td>
@@ -33,7 +33,7 @@
         <tfoot>
             <tr>
                 <td colspan="9">
-                    <caption>Número de registros retornados: <?php echo $regs;?></caption>
+                    <caption>Número de registros retornados: <?php echo count($usuarios);?></caption>
                 </td>
             </tr>
         </tfoot>

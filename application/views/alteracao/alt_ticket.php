@@ -5,7 +5,7 @@
     <form action="<?php echo site_url('buscar_ticket');?>" method="post">
         <div class="form-group">
             <label for="ticket" class="form-control-label">
-                Número Ticket
+                Ticket
             </label>
             <input type="search" class="form-control" id="ticket" name="buscar" results="">
         </div>

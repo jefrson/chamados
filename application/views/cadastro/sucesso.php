@@ -18,7 +18,9 @@
         </div>
     </div>
 </div>
-
+<?php
+    $pagina = $this->uri->uri_string();
+?>
 <script>
     $('#sucesso').modal('show');
     $('#sucesso').on('hidden.bs.modal', function(){

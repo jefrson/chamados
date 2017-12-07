@@ -15,12 +15,13 @@
                     <label for="solicitante" class="form-control-label">
                         Solicitante
                     </label>
-                    <input type="text" class="form-control-plaintext bg-light text-info" id="solicitante" name="solicitante" readonly value="<?php echo $this->session->nome; ?>">
+                    <input type="text" class="form-control-plaintext bg-light text-info" id="solicitante" name="solicitante" readonly value="<?php echo ucfirst($this->session->nome); ?>">
                 </div>
                 <div class="form-check col">
-                    <label class="form-check-label">
-                        <input type="checkbox" class="form-check-input" name="ativo" <?php echo $t->ativo?"checked='checked'":""; ?>>
-                        Ativo
+                    <label class="custom-control custom-checkbox">
+                        <input type="checkbox" class="custom-control-input" name="ativo" <?php echo $t->ativo?"checked='checked'":""; ?>>
+                        <span class="custom-control-indicator"></span>
+                        <span class="custom-control-description">Ativo</span>
                     </label>
                 </div>
             </div>
@@ -31,48 +32,46 @@
                     </label>
                     <select name="id_categoria" id="categoria" class="form-control">
                         <option value="0"></option>
-                        <option value="1" <?php echo $t->id_categoria==1?"selected":""; ?>>Categoria 1</option>
-                        <option value="2" <?php echo $t->id_categoria==2?"selected":""; ?>>Categoria 2</option>
-                        <option value="3" <?php echo $t->id_categoria==3?"selected":""; ?>>Categoria 3</option>
-                        <option value="4" <?php echo $t->id_categoria==4?"selected":""; ?>>Categoria 4</option>
+                        <option value="1" <?php echo $t->id_categoria==1?"selected":""; ?>>Armazenamento e impressão</option>
+                        <option value="2" <?php echo $t->id_categoria==1?"selected":""; ?>>Email e mensagens</option>
+                        <option value="3" <?php echo $t->id_categoria==1?"selected":""; ?>>Redes e conectividade</option>
+                        <option value="4" <?php echo $t->id_categoria==1?"selected":""; ?>>Softwares</option>
+                        <option value="5" <?php echo $t->id_categoria==1?"selected":""; ?>>Sistemas Operacionais</option>
+                        <option value="6" <?php echo $t->id_categoria==1?"selected":""; ?>>Sites e portais web</option>
                     </select>
                 </div>
                 <div class="form-group col">
                     <label for="urgencia" class="form-control-label">
                         Urgência
                     </label>
-                    <select name="urgencia" id="urgencia" class="form-control">
-                        <option value="0"></option>
-                        <option value="baixa" <?php echo $t->urgencia=="baixa"?"selected":""; ?>>Baixa</option>
-                        <option value="media" <?php echo $t->urgencia=="media"?"selected":""; ?>>Média</option>
-                        <option value="alta" <?php echo $t->urgencia=="alta"?"selected":""; ?>>Alta</option>
-                        <option value="urgente" <?php echo $t->urgencia=="urgente"?"selected":""; ?>>Urgente</option>
-                    </select>
+                    <input type="text" name="urgencia" id="urgencia" class="form-control" value="<?php echo ucfirst($t->urgencia); ?>" readonly>
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="responsavel" class="form-control-label">
-                    Responsável
-                </label>
-                <input type="text" class="form-control" id="responsavel" name="responsavel" value="<?php echo $t->responsavel; ?>"><?php echo form_error('responsavel'); ?>
             </div>
             <div class="form-row">
                 <div class="form-group col">
                     <label for="dt_ini" class="form-control-label">
-                        Data Inicial
+                        Data/Hora
                     </label>
                     <input type="datetime-local" class="form-control" id="dt_ini" name="data_inicial" value="<?php echo str_replace(" ", "T", $t->data_inicial); ?>">
                 </div>
+                <div class="form-group col">
+                    <label for="responsavel" class="form-control-label">
+                        Responsável
+                    </label>
+                    <input type="text" class="form-control" id="responsavel" name="responsavel" value="<?php echo ucfirst($t->responsavel); ?>"><?php echo form_error('responsavel'); ?>
+                </div>
+            <!--
                 <div class="form-group col">
                     <label for="dt_fin" class="form-control-label"> 
                         Data Final
                     </label>
                     <input type="datetime-local" class="form-control" id="dt_fin" name="data_final" value="<?php echo str_replace(" ", "T", $t->data_final); ?>">
                 </div>
+            -->
             </div>
             <div class="form-group">
                 <label for="assunto" class="form-control-label">
-                    Assunto
+                    Tipo do incidente
                 </label>
                 <textarea name="assunto" class="form-control" id="assunto" rows="1"><?php echo $t->assunto; ?></textarea><?php echo form_error('assunto'); ?>
             </div>
@@ -103,4 +102,36 @@
 <div class="card-footer">
     
 </div>
+<script type="text/javascript">
+    $(document).ready(function(){
+        $('#id_categoria').on('change',function(){
+            var cat = $('#id_categoria').children(':selected').val();
+
+            switch(cat){
+                case "3":
+                    $('#urgencia').val('Urgente');
+                break;
+                case "1":
+                    $('#urgencia').val('Alta');
+                break;
+                case "4":
+                    $('#urgencia').val('Alta');
+                break;
+                case "2":
+                    $('#urgencia').val('Média');
+                break;
+                case "5":
+                    $('#urgencia').val('Média');
+                break;
+                case "6":
+                    $('#urgencia').val('Baixa');
+                break;
+            }
+        });
+
+        var data = new Date();
+
+        $('#dt_inicial').val(data.toLocaleString());
+    });
+</script>
 <?php $this->load->view('./rodape'); ?>

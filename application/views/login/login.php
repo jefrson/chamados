@@ -9,7 +9,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
         <style>
             body{
-                margin: 50px; 
+                margin: 50px;
             }
         </style>
     </head>
@@ -17,10 +17,11 @@
         <div class="row align-self-center justify-content-center">
             <div class="col-6s">
                 <div class="card card-default">
-                    <header class="card-header">
-                        <h6 class="card-title">Entre com sua Matrícula e CPF para acessar</h6>
+                    <header class="card-header text-center">
+                        <img src="<?php echo base_url('/public/imagens/brasao500x500(5).png'); ?>" alt="Brasão" height="150">
                     </header>
                     <div class="card-body">
+                        <h6 class="card-title">Entre com sua Matrícula e CPF para acessar</h6>
                         <form class="form" action="<?php echo site_url('verificar_login'); ?>" method="post">
                             <div class="form-group">
                                 <label for="matricula" class="form-control-label">
@@ -42,9 +43,6 @@
                             </div>
                         </form>
                     </div>
-                    <div class="card-footer">
-                        
-                    </div>    
                 </div>
             </div>
         </div>
