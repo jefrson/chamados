@@ -22,10 +22,10 @@
             <tbody>
                 <?php foreach ($tickets as $t): ?>
                     <tr>
-                        <td class="controls">
-                            <label class="custom-control custom-checkbox">
-                                <button class="btn btn-primary btn-sm editar" type="button" name="editar_<?php echo $t->id_ticket; ?>">Editar</button>
-                            </label>
+                        <td>
+                            <form method="post" action="<?php echo site_url('editar_andamento'); ?>" id="form_editar_<?php echo $t->id_ticket; ?>">
+                                <input type="hidden" name="tick" value="<?php echo $t->id_ticket; ?>">
+                            </form>
                         </td>
                         <td><?php echo $t->id_ticket; ?></td>
                         <?php if($this->session->nivel == FALSE): ?>
@@ -57,21 +57,10 @@
 </div>
 <script type="text/javascript">
     $(document).ready(function(){
-        $('.editar').on('click', function(){
-            var id = $(this).parent().parent().parent().children().next().html();
+        $('tr').on('click', function(){
+            var id = $(this).children().next().html();
             console.log(id);
-            $.ajax({
-                url: "<?php echo site_url('andamento/editarAndamento'); ?>",
-                type: 'POST',
-                data: {'id_ticket': id},
-            }).done(function() {
-                console.log("successo");
-                $(location).attr('href', '<?php echo site_url('editar_andamento'); ?>');
-            }).fail(function() {
-                console.log("erro");
-            }).always(function() {
-                console.log("completo");
-            });
+            $('#form_editar_'+id).submit();
         });
     });
 </script>

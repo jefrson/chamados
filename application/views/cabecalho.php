@@ -4,10 +4,19 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <title>Chamados</title>
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" crossorigin="anonymous">
+
+        <link rel="stylesheet" href="<?php echo base_url('public/bootstrap/css/bootstrap.min.css'); ?>">
         <script src="<?php echo base_url('public/js/jquery.js')?>"></script>
+        <!--
+        <script src="<?php echo base_url('public/popper.js/dist/popper.min.js'); ?>"></script>
+        <script src="<?php echo base_url('public/bootstrap/js/bootstrap.min.js'); ?>"></script>
+        -->
+
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js" integrity="sha384-b/U6ypiBEHpOf/4+1nzFpr53nxSS+GLCkfwBdFNTxtclqqenISfwAzpKaMNFNmj4" crossorigin="anonymous"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js" integrity="sha384-h0AbiXch4ZDo7tp9hKZ4TsHbi047NrKGLO3SEJAg45jXxnGIfYzk4Si90RDIqNm1" crossorigin="anonymous"></script>
+        
         <style>
             body{
                 margin-top: 80px;
@@ -29,7 +38,7 @@
             <header class="col-auto">
                 <nav class="navbar navbar-expand-sm fixed-top navbar-light bg-light">
                     <a class="navbar-brand" href="<?php echo site_url('cadastro_ticket'); ?>"><img height="40" alt="Brasão Arapoti" src="<?php echo base_url('/public/imagens/brasao500x500(5).png');?>">Prefeitura Municipal de Arapoti</a>
-                    
+
                     <div class="collapse navbar-collapse align-self-center" id="menu">
                         <ul class="navbar-nav mr-auto">
                             <li class="nav-item dropdown">

@@ -10,7 +10,7 @@
             <select name="id_ticket" id="id_ticket" class="form-control" required>
                 <option></option>
                 <?php foreach($tickets as $t): ?>
-                    <option value="<?php echo $t->id_ticket; ?>" <?php echo $t->id_ticket == $id?"selected='selected'":""; ?>><?php echo $t->id_ticket; ?></option>
+                    <option value="<?php echo $t->id_ticket; ?>" <?php echo (isset($tick)&&$t->id_ticket===$tick)?"selected":""; ?>><?php echo $t->id_ticket; ?></option>
                 <?php endforeach; ?>
             </select>
         </div>
@@ -35,6 +35,6 @@
     </form>
 </div>
 <div class="card-footer">
-    
+
 </div>
 <?php $this->load->view('./rodape') ?>
