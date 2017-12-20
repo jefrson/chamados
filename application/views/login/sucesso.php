@@ -20,7 +20,7 @@
                     </div>
                     <div class="modal-body">
                         <p>Login concluído com sucesso!</p>
-                        <p>Bem vindo <?php echo ucfirst($this->session->nome);?>!</p>
+                        <p>Bem vindo <?php echo ucwords($this->session->nome);?>!</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Fechar</button>

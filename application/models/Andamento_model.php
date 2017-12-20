@@ -68,4 +68,14 @@ class Andamento_model extends CI_Model{
             return $res->result();
         }
     }
+
+    function msgAndamento($id){
+        $res = $this->db->query("select * from andamento where id_ticket = ".$id." order by data_hora desc");
+        //$res = $this->db->get_where('andamento', array('id_ticket', $id));
+        if($res->num_rows() == 0){
+            return 'inativo';
+        }else{
+            return $res->row()->and_mensagem;
+        }
+    }
 }

@@ -30,14 +30,14 @@
                     <label for="categoria" class="form-control-label">
                         Categoria
                     </label>
-                    <select name="id_categoria" id="categoria" class="form-control">
+                    <select name="id_categoria" id="id_categoria" class="form-control">
                         <option value="0"></option>
                         <option value="1" <?php echo $t->id_categoria==1?"selected":""; ?>>Armazenamento e impressão</option>
-                        <option value="2" <?php echo $t->id_categoria==1?"selected":""; ?>>Email e mensagens</option>
-                        <option value="3" <?php echo $t->id_categoria==1?"selected":""; ?>>Redes e conectividade</option>
-                        <option value="4" <?php echo $t->id_categoria==1?"selected":""; ?>>Softwares</option>
-                        <option value="5" <?php echo $t->id_categoria==1?"selected":""; ?>>Sistemas Operacionais</option>
-                        <option value="6" <?php echo $t->id_categoria==1?"selected":""; ?>>Sites e portais web</option>
+                        <option value="2" <?php echo $t->id_categoria==2?"selected":""; ?>>Email e mensagens</option>
+                        <option value="3" <?php echo $t->id_categoria==3?"selected":""; ?>>Redes e conectividade</option>
+                        <option value="4" <?php echo $t->id_categoria==4?"selected":""; ?>>Softwares</option>
+                        <option value="5" <?php echo $t->id_categoria==5?"selected":""; ?>>Sistemas Operacionais</option>
+                        <option value="6" <?php echo $t->id_categoria==6?"selected":""; ?>>Sites e portais web</option>
                     </select>
                 </div>
                 <div class="form-group col">
@@ -62,7 +62,7 @@
                 </div>
             <!--
                 <div class="form-group col">
-                    <label for="dt_fin" class="form-control-label"> 
+                    <label for="dt_fin" class="form-control-label">
                         Data Final
                     </label>
                     <input type="datetime-local" class="form-control" id="dt_fin" name="data_final" value="<?php echo str_replace(" ", "T", $t->data_final); ?>">
@@ -100,7 +100,7 @@
     <?php endif; ?>
 </div>
 <div class="card-footer">
-    
+
 </div>
 <script type="text/javascript">
     $(document).ready(function(){

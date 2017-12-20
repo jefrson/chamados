@@ -11,6 +11,16 @@ class Usuario_model extends CI_Model {
         return $this->db->affected_rows();
     }
 
+    function nomeExiste($nome){
+        $res = $this->db->get_where('usuario', array('nome', $nome));
+
+        if($res->num_rows() == 0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
     function listar($limit = null, $offset = null){
         $this->db->order_by('id_usuario', 'asc');
 

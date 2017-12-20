@@ -16,7 +16,7 @@
                     <th>Responsável</th>
                     <th>Assunto</th>
                     <th>Data/Hora</th>
-                    <th>Estado</th>
+                    <th>Andamento</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,10 +33,10 @@
                         <?php endif; ?>
                         <td><?php echo $t->id_categoria; ?></td>
                         <td><?php echo $t->urgencia; ?></td>
-                        <td><?php echo ucfirst($t->responsavel); ?></td>
+                        <td><?php echo ucwords($t->responsavel); ?></td>
                         <td><?php echo $t->assunto; ?></td>
                         <td><?php echo date("d/m/Y H:i", strtotime($t->data_inicial)); ?></td>
-                        <td><?php echo $t->ativo?"Ativo":"Concluido"; ?></td>
+                        <td><?php echo $this->andamento_model->msgAndamento($t->id_ticket); ?></td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

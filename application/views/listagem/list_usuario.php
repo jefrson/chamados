@@ -19,7 +19,7 @@
             <?php foreach ($usuarios as $us): ?>
             <tr>
                 <td><?php echo $us->id_usuario; ?></td>
-                <td><?php echo ucfirst($us->nome); ?></td>
+                <td><?php echo ucwords($us->nome); ?></td>
                 <td><?php echo $us->id_setor; ?></td>
                 <td><?php echo $us->id_cargo; ?></td>
                 <td><?php echo $us->id_secretaria; ?></td>

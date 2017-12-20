@@ -12,17 +12,29 @@ class Andamento extends CI_Controller{
         $this->load->library('phpmailer_library');
     }
 
+    //Adiciona um andamento ao ticket
     function adicionarAndamento(){
+
+        //Executa a função de validação
         $this->validar();
+
+        //Adiciona uma classe ao delimitador para que este apareça como error-message
         $this->form_validation->set_error_delimiters('<div class="invalid-feedback">', '</div>');
+
+        //Validação dos dados vindos do formulário
         if($this->form_validation->run()){
+
+            //Instancia o objeto e carrega os dados
             $obj = new stdClass;
             $obj->id_ticket = $this->input->post('id_ticket');
             $obj->and_mensagem = $this->input->post('and_mensagem');
             $obj->data_hora = $this->input->post('data_hora');
 
+            //Adiciona o andamento e envia email da alteração
             if($this->andamento_model->adicionar($obj) == 1 && $this->alterarChamado($obj)){
                 $this->load->view('cadastro/sucesso');
+
+                //Verifica se o andamento foi concluido
                 if($this->concluido($obj)){
                     echo "Deu certo";
                 }else{
@@ -32,9 +44,11 @@ class Andamento extends CI_Controller{
                 $this->load->view('cadastro/falha');
             }
         }
+
         $this->load->view('cadastro/cad_andamento');
     }
 
+    //Adiciona um andamento pelo ticket selecionado na lista de tickets
     function editarAndamento(){
         $id = $this->input->post('tick');
 
@@ -45,6 +59,7 @@ class Andamento extends CI_Controller{
         $this->load->view('cadastro/cad_andamento', $v);
     }
 
+    //Lista os andamentos
     function listarAndamento(){
         $dt = $this->paginacao();
 
@@ -101,6 +116,7 @@ class Andamento extends CI_Controller{
         return $dt;
     }
 
+    //Altera os andamentos
     function alterarAndamento(){
 
         $dt = array(
@@ -117,6 +133,7 @@ class Andamento extends CI_Controller{
         $this->load->view('alteracao/alt_andamento');
     }
 
+    //Busca o andamento que vai ser alterado
     function buscarAndamento(){
         $andamento = $this->input->post('buscar');
         $res = $this->andamento_model->selecionarAndamento($andamento);
@@ -128,31 +145,40 @@ class Andamento extends CI_Controller{
         $this->load->view('alteracao/alt_andamento_2', $v);
     }
 
+    //Função de validação dos dados do formulário
     function validar(){
+
+        //Regras de validação
         $this->form_validation->set_rules('id_ticket', 'Ticket', 'trim|required');
         $this->form_validation->set_rules('and_mensagem', 'Mensagem', 'trim|required');
         $this->form_validation->set_rules('data_hora', 'Data/Hora', 'trim|required');
 
+        //Mensagem de erro
         $this->form_validation->set_message('required', 'O campo %s é obrigatório!');
     }
 
+    //Função de envio de email de alteração
     function alterarChamado($dados){
+
+        //Dados da Mensagem
         $msg = $this->msg($dados);
         $dados->msg = $msg;
         $dados->nome = $this->session->nome;
         $dados->email = $this->session->email;
         $dados->assunto = "Ticket ".$dados->id_ticket." foi alterado.";
 
+        //Envia email
         if($this->phpmailer_library->send($dados)){
             return TRUE;
         }
         return FALSE;
     }
 
+    //Estrutura a ser enviada por email
     private function msg($dt){
         return "<body>
         <div>
-            <p>Chamado alterado por: ".ucfirst($this->session->nome)."</p>
+            <p>Chamado alterado por: ".ucwords($this->session->nome)."</p>
             <p>Segue abaixo as informações do chamado:</p>
         </div>
         <table>
@@ -174,9 +200,12 @@ class Andamento extends CI_Controller{
     </body>";
     }
 
+    //Função que verifica se o andamento é concluido
     function concluido($obj){
-        if(strcasecmp($obj->and_mensagem, "concluido")){
-            if($this->ticket_model->alterar($obj->id_ticket)){
+        if(strcasecmp($obj->and_mensagem, "concluido") == 0){
+            $dt['id_ticket'] = $obj->id_ticket;
+            $dt['ativo'] = false;
+            if($this->ticket_model->alterar($dt)){
                 return true;
             }else{
                 return false;

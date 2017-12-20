@@ -175,7 +175,7 @@ class Usuario extends CI_Controller{
     private function validar(){
 
         //Define as regras a serem validadas
-        $this->form_validation->set_rules('nome','Nome','trim|required|alpha');
+        $this->form_validation->set_rules('nome','Nome','trim|required|regex_match[/^[a-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÒÖÚÇÑ. ]+$/]|is_unique[usuario.nome]');
         $this->form_validation->set_rules('id_setor','Setor','trim|required|numeric');
         $this->form_validation->set_rules('id_cargo','Cargo','trim|required|numeric');
         $this->form_validation->set_rules('id_secretaria','Secretaria','trim|required|numeric');
@@ -189,5 +189,6 @@ class Usuario extends CI_Controller{
         $this->form_validation->set_message('alpha', 'O campo %s aceita apenas letras!');
         $this->form_validation->set_message('valid_email', 'Campo %s incorreto!');
         $this->form_validation->set_message('validar_cpf', '%s inválido!');
+        $this->form_validation->set_message('is_unique', '%s já cadastrado!');
     }
 }

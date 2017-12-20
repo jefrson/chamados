@@ -1,4 +1,4 @@
-<?php 
+<?php
 class Ticket_model extends CI_Model{
 
     function __construct(){
@@ -27,7 +27,8 @@ class Ticket_model extends CI_Model{
             $this->db->limit($limit, $offset);
         }
 
-        $res = ($admin)?$this->db->get('ticket'):$this->db->get_where('ticket', array('solicitante' => $this->session->id_usuario, 'ativo' => TRUE));
+        $res = ($admin)?$this->db->get('ticket'):$this->db->get_where('ticket', array('solicitante' => $this->session->id_usuario));
+
         if(!$this->db->get('ticket')){
             $er = $this->db->error();
             return $er;
@@ -37,17 +38,13 @@ class Ticket_model extends CI_Model{
     }
 
     function totalReg(){
-        if($this->session->nivel){
-            $res = $this->db->get_where('ticket', array('solicitante' => $this->session->id_usuario, 'ativo' => TRUE));
-        }else{
-            $res = $this->db->get('ticket');
-        }
+        $res = $this->db->get_where('ticket', array('solicitante' => $this->session->id_usuario, 'ativo' => TRUE));
 
         return $res->num_rows();
     }
 
     function alterar($dt){
-        $this->db->where('id_ticket', $dt);
+        $this->db->where('id_ticket', $dt['id_ticket']);
         $this->db->update('ticket', $dt);
         return $this->db->affected_rows();
     }

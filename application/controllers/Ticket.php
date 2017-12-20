@@ -8,6 +8,7 @@ class Ticket extends CI_Controller{
         parent::__construct();
 
         $this->load->model('ticket_model');
+        $this->load->model('andamento_model');
         $this->load->model('usuario_model');
         $this->load->library('phpmailer_library');
     }
@@ -49,6 +50,7 @@ class Ticket extends CI_Controller{
         $this->load->view('cadastro/cad_ticket'); //Redireciona para a página
     }
 
+    //Buscar ticket pelo número
     function buscarTicket(){
 
         $ticket = $this->input->post('buscar');
@@ -61,8 +63,10 @@ class Ticket extends CI_Controller{
         $this->load->view('alteracao/alt_ticket_2', $v);
     }
 
+    //Altera ticket
     function alterarTicket(){
 
+        //Verifica o estado do ticket
         $st = $this->input->post('ativo');
         if(isset($st)){
             $ativo = TRUE;
@@ -70,6 +74,7 @@ class Ticket extends CI_Controller{
             $ativo = FALSE;
         }
 
+        //Carrega os dados
         $dt = array(
             'id_ticket' => $this->input->post('id_ticket'),
             'id_categoria' => $this->input->post('id_categoria'),
@@ -90,7 +95,9 @@ class Ticket extends CI_Controller{
         $this->load->view('alteracao/alt_ticket');
     }
 
+    //Valida os dados do formulário
     private function validar(){
+        //Regras de validação
         $this->form_validation->set_rules('id_categoria', 'Categoria', 'trim|required');
         $this->form_validation->set_rules('urgencia', 'Urgência', 'trim|required');
         $this->form_validation->set_rules('responsavel','Responsável','trim|required|regex_match[/^[a-záàâãéèêíïóôõöúçñÁÀÂÃÉÈÊÍÏÓÒÖÚÇÑ ]+$/]');
@@ -98,10 +105,12 @@ class Ticket extends CI_Controller{
         $this->form_validation->set_rules('assunto','Assunto','trim|required');
         $this->form_validation->set_rules('data_inicial','Data','trim|required');
 
+        //Mensagens de erro
         $this->form_validation->set_message('required', 'O campo %s é obrigatório!');
         $this->form_validation->set_message('regex_match', 'O campo %s aceita apenas letras e acentos!');
     }
 
+    //Upload de arquivos -- Obs: Não está funcionando
     private function do_upload($arq){
         $pasta = "./uploads/";
         $lista = array('image/jpg', 'image/png', 'image/jpeg', 'application/msword',
@@ -120,7 +129,10 @@ class Ticket extends CI_Controller{
         }
     }
 
+    //Lista os tickets
     function listarTicket(){
+
+        //Paginação
         $dt = $this->paginacao();
 
         $v = array(
@@ -176,6 +188,7 @@ class Ticket extends CI_Controller{
         return $dt;
     }
 
+    //Seleciona o ultimo ID que foi adicionado
     function ultimoId(){
         $ids = $this->ticket_model->selecionarId();
 
@@ -184,22 +197,27 @@ class Ticket extends CI_Controller{
         }
     }
 
+    //Envia email de abertura do chamado
     function abrirChamado($dados){
+
+        //Dados da mensagem
         $msg = $this->msg($dados);
         $dados->msg = $msg;
         $dados->nome = $this->session->nome;
         $dados->email = $this->session->email;
 
+        //Envia email
         if($this->phpmailer_library->send($dados)){
             return TRUE;
         }
         return FALSE;
     }
 
+    //Estrutura da mensagem
     private function msg($dt){
         return "<body>
         <div>
-            <p>Chamado aberto por: ".ucfirst($this->session->nome)."</p>
+            <p>Chamado aberto por: ".ucwords($this->session->nome)."</p>
             <p>Segue abaixo as informações do chamado:</p>
         </div>
         <table>

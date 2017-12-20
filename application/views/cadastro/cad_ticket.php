@@ -14,7 +14,7 @@
                 <label for="solicitante" class="form-control-label">
                     Solicitante
                 </label>
-                <input class="form-control-plaintext text-info bg-light" id="solicitante" type="text" name="solicitante" readonly value="<?php echo ucfirst($this->session->nome); ?>">
+                <input class="form-control-plaintext text-info bg-light" id="solicitante" type="text" name="solicitante" readonly value="<?php echo ucwords($this->session->nome); ?>">
             </div>
         </div>
         <div class="form-row justify-content-center">
