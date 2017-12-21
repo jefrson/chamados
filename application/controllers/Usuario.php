@@ -34,9 +34,9 @@ class Usuario extends CI_Controller{
             $nivel = $this->input->post('nivel');
 
             if(isset($nivel)){
-                $obj->nivel = TRUE;
+                $obj->nivel = 1;
             }else{
-                $obj->nivel = FALSE;
+                $obj->nivel = 2;
             }
 
             $adc = $this->usuario_model->adicionar($obj); //Envia para o Model o objeto que vai ser cadastrado
@@ -80,7 +80,7 @@ class Usuario extends CI_Controller{
             'matricula' => $this->input->post('matricula'),
             'cpf' => $cpf,
             'email' => $this->input->post('email'),
-            'nivel' => isset($nivel)?TRUE:FALSE,
+            'nivel' => isset($nivel)?1:2,
             'senha' => md5($cpf)
         );
 
@@ -105,7 +105,7 @@ class Usuario extends CI_Controller{
             'matricula' => $this->input->post('matricula'),
             'cpf' => $cpf,
             'email' => $this->input->post('email'),
-            'nivel' => isset($nivel)?TRUE:FALSE,
+            'nivel' => isset($nivel)?1:2,
             'senha' => md5($cpf)
         );
 

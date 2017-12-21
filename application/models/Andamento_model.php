@@ -11,13 +11,9 @@ class Andamento_model extends CI_Model{
     }
 
     function listarTickets(){
-        if($this->session->nivel){
+        if($this->session->nivel == 0 || $this->session->nivel == 1){
             $this->db->order_by('id_ticket', 'desc');
-            $this->db->join('usuario', 'ticket.solicitante = usuario.id_usuario');
-            $res = $this->db->get_where('ticket', array('usuario.nome' => $this->session->nome, 'ticket.ativo' => true));
-            return $res->result();
-        }else{
-            $res = $this->db->get('ticket');
+            $res = $this->db->get_where('ticket', array('ticket.ativo' => true));
             return $res->result();
         }
     }
@@ -28,7 +24,7 @@ class Andamento_model extends CI_Model{
         if($limit){
             $this->db->limit($limit,$offset);
         }
-        if($this->session->nivel){
+        if($this->session->nivel == 0 || $this->session->nivel == 1){
             $this->db->join('ticket', 'andamento.id_ticket = ticket.id_ticket');
             $this->db->join('usuario', 'ticket.solicitante = usuario.id_usuario');
             $res = $this->db->get_where('andamento', array('usuario.nome' => $this->session->nome));
@@ -40,7 +36,7 @@ class Andamento_model extends CI_Model{
     }
 
     function totalReg(){
-        if($this->session->nivel){
+        if($this->session->nivel == 0 || $this->session->nivel == 1){
             $this->db->join('ticket', 'andamento.id_ticket = ticket.id_ticket');
             $this->db->join('usuario', 'ticket.solicitante = usuario.id_usuario');
             $res = $this->db->get_where('andamento', array('usuario.nome' => $this->session->nome));
@@ -76,6 +72,16 @@ class Andamento_model extends CI_Model{
             return 'inativo';
         }else{
             return $res->row()->and_mensagem;
+        }
+    }
+
+    function estaInativo($id){
+        $res = $this->db->get_where('ticket', array('id_ticket' => $id, 'ativo' => true));
+
+        if($res->num_rows() == 0){
+            return true;
+        }else{
+            return false;
         }
     }
 }

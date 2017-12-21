@@ -26,7 +26,17 @@
                 <td><?php echo $us->matricula; ?></td>
                 <td><?php echo $us->cpf; ?></td>
                 <td><?php echo $us->email; ?></td>
-                <td><?php echo $us->nivel==1?"Usuário":"Admin"; ?></td>
+                <td>
+                    <?php
+                        if($us->nivel==0){
+                            echo "Admin";
+                        }else if($us->nivel==1){
+                            echo "Técnico";
+                        }else if($us->nivel==2){
+                            echo "Usuário";
+                        }
+                    ?>
+                </td>
             </tr>
             <?php endforeach; ?>
         </tbody>

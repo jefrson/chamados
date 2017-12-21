@@ -31,7 +31,7 @@
         <script>
             $('#sucesso').modal('show');
             $('#sucesso').on('hidden.bs.modal', function(){
-                <?php if($this->session->nivel): ?>
+                <?php if($this->session->nivel == 2): ?>
                     $(location).attr('href', "<?php echo site_url('cadastro_ticket'); ?>");
                 <?php else: ?>
                     $(location).attr('href', "<?php echo site_url('listar_tickets'); ?>");

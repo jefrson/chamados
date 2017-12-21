@@ -183,7 +183,7 @@ class Ticket extends CI_Controller{
         $offset = substr($this->uri->uri_string(3),15)*($regPag/2);
 
         //Busca os tickets com o limite $regPag e começando em $offset
-        $dt['tickets'] = $this->ticket_model->listar($regPag,ceil($offset), (!$this->session->nivel)?TRUE:NULL);
+        $dt['tickets'] = $this->ticket_model->listar($regPag,ceil($offset), ($this->session->nivel==2)?NULL:TRUE);
 
         return $dt;
     }

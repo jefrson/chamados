@@ -35,11 +35,7 @@ class Andamento extends CI_Controller{
                 $this->load->view('cadastro/sucesso');
 
                 //Verifica se o andamento foi concluido
-                if($this->concluido($obj)){
-                    echo "Deu certo";
-                }else{
-                    echo "Não deu certo";
-                }
+                $this->concluido($obj);
             }else{
                 $this->load->view('cadastro/falha');
             }
@@ -52,11 +48,15 @@ class Andamento extends CI_Controller{
     function editarAndamento(){
         $id = $this->input->post('tick');
 
-        $v = array(
-            'tick' => $id
-        );
+        if($this->andamento_model->estaInativo($id)){
+            $this->load->view('cadastro/inativo');
+        }else{
+            $v = array(
+                'tick' => $id
+            );
 
-        $this->load->view('cadastro/cad_andamento', $v);
+            $this->load->view('cadastro/cad_andamento', $v);
+        }
     }
 
     //Lista os andamentos
@@ -200,7 +200,7 @@ class Andamento extends CI_Controller{
     </body>";
     }
 
-    //Função que verifica se o andamento é concluido
+    //Função que verifica se o andamento é concluido e inativa o ticket
     function concluido($obj){
         if(strcasecmp($obj->and_mensagem, "concluido") == 0){
             $dt['id_ticket'] = $obj->id_ticket;

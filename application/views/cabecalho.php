@@ -46,7 +46,7 @@
                                     Usuários
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="menu_cad" id="menu_cad">
-                                    <?php if($this->session->nivel == 0 || $this->session->nome == "admin"): ?>
+                                    <?php if($this->session->nivel == 0): ?>
                                         <li class="dropdown-item">
                                             <a class="nav-link" href="<?php echo site_url('cadastro_usuario'); ?>">Adicionar</a>
                                         </li>
@@ -57,7 +57,7 @@
                                     <li class="dropdown-item">
                                         <a class="nav-link" href="<?php echo site_url('alterar_usuario'); ?>">Suas Informações</a>
                                     </li>
-                                    <?php if($this->session->nivel == 0 || $this->session->nome == "admin"): ?>
+                                    <?php if($this->session->nivel == 0): ?>
                                         <li class="dropdown-item">
                                             <a class="nav-link" href="<?php echo site_url('buscar_usuario'); ?>">Alterar</a>
                                         </li>
@@ -75,34 +75,35 @@
                                     <li class="dropdown-item">
                                         <a class="nav-link" href="<?php echo site_url('listar_ticket'); ?>">Listar</a>
                                     </li>
-                                    <li class="dropdown-item">
-                                        <a class="nav-link" href="<?php echo site_url('alterar_ticket'); ?>">Alterar</a>
-                                    </li>
+                                    <?php if($this->session->nivel == 0): ?>
+                                        <li class="dropdown-item">
+                                            <a class="nav-link" href="<?php echo site_url('alterar_ticket'); ?>">Alterar</a>
+                                        </li>
+                                    <?php endif; ?>
                                 </ul>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" id="menu_alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Andamento
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="menu_alt" id="menu_alt">
-                                    <?php if($this->session->nivel == 0 || $this->session->nome == "admin"): ?>
+                            <?php if($this->session->nivel == 0 || $this->session->nivel == 1): ?>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" id="menu_alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Andamento
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="menu_alt" id="menu_alt">
                                         <li class="dropdown-item">
                                             <a class="nav-link" href="<?php echo site_url('cadastro_andamento'); ?>">Adicionar</a>
                                         </li>
-                                    <?php endif; ?>
-                                    <?php if($this->session->nivel == 0 || $this->session->nome == "admin"): ?>
-                                        <li class="dropdown-item">
-                                            <a class="nav-link" href="<?php echo site_url('alterar_andamento'); ?>">Alterar</a>
-                                        </li>
-                                    <?php endif; ?>
-                                </ul>
-                            </li>
+                                        <?php if($this->session->nivel == 0): ?>
+                                            <li class="dropdown-item">
+                                                <a class="nav-link" href="<?php echo site_url('alterar_andamento'); ?>">Alterar</a>
+                                            </li>
+                                        <?php endif; ?>
+                                    </ul>
+                                </li>
+                            <?php endif; ?>
                             <li class="nav-item">
                                 <a class="nav-link" href="<?php echo site_url('sair'); ?>">Sair</a>
                             </li>
                         </ul>
                     </div>
-
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#menu" aria-controls="menu" aria-expanded='false' aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>

@@ -8,7 +8,7 @@
                 <tr>
                     <th></th>
                     <th>Ticket</th>
-                    <?php if(!$this->session->nivel): ?>
+                    <?php if($this->session->nivel == 0 || $this->session->nivel == 1): ?>
                         <th>Solicitante</th>
                     <?php endif; ?>
                     <th>Categoria</th>
@@ -28,7 +28,7 @@
                             </form>
                         </td>
                         <td><?php echo $t->id_ticket; ?></td>
-                        <?php if($this->session->nivel == FALSE): ?>
+                        <?php if($this->session->nivel == 0 || $this->session->nivel == 1): ?>
                             <td><?php echo $t->solicitante; ?></td>
                         <?php endif; ?>
                         <td><?php echo $t->id_categoria; ?></td>
@@ -55,13 +55,15 @@
         <?php echo $paginacao; ?>
     </nav>
 </div>
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('tr').on('click', function(){
-            var id = $(this).children().next().html();
-            console.log(id);
-            $('#form_editar_'+id).submit();
+<?php if($this->session->nivel == 0 || $this->session->nivel == 1): ?>
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('tr').on('click', function(){
+                var id = $(this).children().next().html();
+                console.log(id);
+                $('#form_editar_'+id).submit();
+            });
         });
-    });
-</script>
+    </script>
+<?php endif; ?>
 <?php $this->load->view('./rodape'); ?>
