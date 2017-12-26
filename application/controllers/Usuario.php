@@ -34,9 +34,9 @@ class Usuario extends CI_Controller{
             $nivel = $this->input->post('nivel');
 
             if(isset($nivel)){
-                $obj->nivel = 1;
-            }else{
                 $obj->nivel = 2;
+            }else{
+                $obj->nivel = 1;
             }
 
             $adc = $this->usuario_model->adicionar($obj); //Envia para o Model o objeto que vai ser cadastrado

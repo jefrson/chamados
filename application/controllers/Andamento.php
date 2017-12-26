@@ -205,6 +205,7 @@ class Andamento extends CI_Controller{
         if(strcasecmp($obj->and_mensagem, "concluido") == 0){
             $dt['id_ticket'] = $obj->id_ticket;
             $dt['ativo'] = false;
+            $dt['data_final'] = $obj->data_hora;
             if($this->ticket_model->alterar($dt)){
                 return true;
             }else{

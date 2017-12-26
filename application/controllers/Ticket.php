@@ -27,17 +27,18 @@ class Ticket extends CI_Controller{
             $obj->responsavel = $this->input->post('responsavel');
             $obj->mensagem = $this->input->post('mensagem');
             $obj->assunto = $this->input->post('assunto');
-            $obj->anexo = $_FILES['anexo']['name'];
+            $obj->anexo = $_FILES['anexo'];
             $obj->data_inicial = $this->input->post('data_inicial');
             $obj->solicitante = $_SESSION['id_usuario'];
             $st = $this->input->post('ativo');
+
             if(isset($st)){
                 $obj->ativo = TRUE;
             }else{
                 $obj->ativo = FALSE;
             }
 
-            //$up = $this->do_upload($_FILES['anexo']);
+            //$this->do_upload($_FILES['anexo']); --Não está funcionando
 
             //Envia para o Model o objeto que vai ser cadastrado e
             //Verifica e foi adicionado com sucesso
@@ -112,20 +113,31 @@ class Ticket extends CI_Controller{
 
     //Upload de arquivos -- Obs: Não está funcionando
     private function do_upload($arq){
-        $pasta = "./uploads/";
+        $nome = $arq['name'];
+        $pasta = "./uploads/".$nome;
+
+        if(!is_dir($pasta)){
+            mkdir($pasta, 0777, $recursive = true);
+        }
+
         $lista = array('image/jpg', 'image/png', 'image/jpeg', 'application/msword',
             'application/pdf', 'application/zip', 'application/rar', 'application/vnd.ms-excel',
             'application/vnd.ms-powerpoint','application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
             'application/vnd.openxmlformats-officedocument.presentationml.presentation');
 
-        if($arq['error'] == 0){
-            if(array_search($pasta, $lista)){
-                $up = move_uploaded_file($arq['tmp_name'], $pasta.$arq['name']);
-                return $up;
-            }else{
-                $error = 'Tipo de arquivo inválido';
-                return $error;
-            }
+        $conf = array('upload_path' => $pasta, 'allowed_types' => $lista, 'file_name' => $nome, 'max_size' => 1024);
+
+        $this->upload->initialize($conf);
+
+        if($this->upload->do_upload($nome)){
+            echo "Arquivo enviado";
+            $dados['dados'] = $this->upload->data();
+            $caminho = './uploads/'.$pasta.'/'.$dados['dados']['file_name'];
+            $dados['url'] = base_url($caminho);
+            $cdownload = 'download/'.$pasta.'/'.$dados['dados']['file_name'];
+            $dados['download'] = base_url($download);
+        }else{
+            echo "Arquivo não enviado.\nERRO: ".$this->upload->display_errors();
         }
     }
 
@@ -198,11 +210,11 @@ class Ticket extends CI_Controller{
     }
 
     //Envia email de abertura do chamado
-    function abrirChamado($dados){
+    private function abrirChamado($obj){
+        $dados = $obj;
 
         //Dados da mensagem
-        $msg = $this->msg($dados);
-        $dados->msg = $msg;
+        $dados->msg = $this->msg($dados);
         $dados->nome = $this->session->nome;
         $dados->email = $this->session->email;
 
@@ -216,26 +228,26 @@ class Ticket extends CI_Controller{
     //Estrutura da mensagem
     private function msg($dt){
         return "<body>
-        <div>
-            <p>Chamado aberto por: ".ucwords($this->session->nome)."</p>
-            <p>Segue abaixo as informações do chamado:</p>
-        </div>
-        <table>
-            <thead>
-                <tr>
-                    <td>Ticket</td>
-                    <td>Mensagem</td>
-                    <td>Data/Hora</td>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>".$this->ultimoId()."</td>
-                    <td>".$dt->mensagem."</td>
-                    <td>".date("d/m/Y H:i", strtotime($dt->data_inicial))."</td>
-                </tr>
-            </tbody>
-        </table>
-    </body>";
+                    <div>
+                        <p>Chamado aberto por: ".ucwords($this->session->nome)."</p>
+                        <p>Segue abaixo as informações do chamado:</p>
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <td>Ticket</td>
+                                <td>Mensagem</td>
+                                <td>Data/Hora</td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>".$this->ultimoId()."</td>
+                                <td>".$dt->mensagem."</td>
+                                <td>".date("d/m/Y H:i", strtotime($dt->data_inicial))."</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </body>";
     }
 }

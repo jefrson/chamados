@@ -16,6 +16,7 @@
                     <th>Responsável</th>
                     <th>Assunto</th>
                     <th>Data/Hora</th>
+                    <th>Término</th>
                     <th>Andamento</th>
                 </tr>
             </thead>
@@ -36,6 +37,7 @@
                         <td><?php echo ucwords($t->responsavel); ?></td>
                         <td><?php echo $t->assunto; ?></td>
                         <td><?php echo date("d/m/Y H:i", strtotime($t->data_inicial)); ?></td>
+                        <td><?php echo ($this->andamento_model->estaInativo($t->id_ticket))?"Em andamento":$t->data_final; ?></td>
                         <td><?php echo $this->andamento_model->msgAndamento($t->id_ticket); ?></td>
                     </tr>
                 <?php endforeach; ?>
