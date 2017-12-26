@@ -210,8 +210,8 @@ class Ticket extends CI_Controller{
     }
 
     //Envia email de abertura do chamado
-    private function abrirChamado($obj){
-        $dados = $obj;
+    private function abrirChamado($objeto){
+        $dados = $objeto;
 
         //Dados da mensagem
         $dados->msg = $this->msg($dados);

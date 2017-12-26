@@ -30,6 +30,9 @@ class Andamento extends CI_Controller{
             $obj->and_mensagem = $this->input->post('and_mensagem');
             $obj->data_hora = $this->input->post('data_hora');
 
+            //Verifica se a alteração está concluindo o chamado
+            $this->concluido();
+
             //Adiciona o andamento e envia email da alteração
             if($this->andamento_model->adicionar($obj) == 1 && $this->alterarChamado($obj)){
                 $this->load->view('cadastro/sucesso');
@@ -201,7 +204,7 @@ class Andamento extends CI_Controller{
     }
 
     //Função que verifica se o andamento é concluido e inativa o ticket
-    function concluido($obj){
+    private function concluido($obj){
         if(strcasecmp($obj->and_mensagem, "concluido") == 0){
             $dt['id_ticket'] = $obj->id_ticket;
             $dt['ativo'] = false;
