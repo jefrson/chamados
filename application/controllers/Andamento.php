@@ -31,14 +31,11 @@ class Andamento extends CI_Controller{
             $obj->data_hora = $this->input->post('data_hora');
 
             //Verifica se a alteração está concluindo o chamado
-            $this->concluido();
+            $this->concluido($obj);
 
             //Adiciona o andamento e envia email da alteração
             if($this->andamento_model->adicionar($obj) == 1 && $this->alterarChamado($obj)){
                 $this->load->view('cadastro/sucesso');
-
-                //Verifica se o andamento foi concluido
-                $this->concluido($obj);
             }else{
                 $this->load->view('cadastro/falha');
             }
@@ -161,7 +158,8 @@ class Andamento extends CI_Controller{
     }
 
     //Função de envio de email de alteração
-    function alterarChamado($dados){
+    function alterarChamado($objeto){
+        $dados = $objeto;
 
         //Dados da Mensagem
         $msg = $this->msg($dados);

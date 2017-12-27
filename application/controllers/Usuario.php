@@ -87,7 +87,7 @@ class Usuario extends CI_Controller{
         if($this->usuario_model->alterar($dt)){
             $this->load->view('alteracao/sucesso');
         }else{
-            $this->load->view('alteracao/falha');
+            //$this->load->view('alteracao/falha');
         }
         $this->load->view('alteracao/alt_usuario');
     }
