@@ -41,9 +41,7 @@
                             if($this->andamento_model->estaInativo($t->id_ticket)){
                                 echo date("d/m/Y H:i", strtotime($t->data_final));
                             }else if(strcmp(date("d/m/Y H:i", strtotime($t->data_final)),"00/00/0000 00:00")){
-                                echo "";
-                            }else{
-                                echo "Em andamento";
+                                echo "00/00/0000 00:00";
                             }
                         ?></td>
                         <td><?php echo $this->andamento_model->msgAndamento($t->id_ticket); ?></td>
@@ -52,7 +50,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="9">
+                    <td colspan="10">
                         <caption>Total de registros retornados: <?php echo count($tickets);?></caption>
                     </td>
                 </tr>
