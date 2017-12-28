@@ -5,7 +5,7 @@ use PHPMailer\PHPMailer\Exception;
 
 require './vendor/autoload.php';
 
-class PHPMailer_Library {
+class PHPMailer_library {
 
     public function __construct() {
         log_message('Debug', 'Classe PHPMailer está rodando');
@@ -15,6 +15,7 @@ class PHPMailer_Library {
 
         $email = new PHPMailer;
 
+        //$email->SMTPDebug = 4;
         $email->isSMTP();
         $email->isHTML(TRUE);
         $email->CharSet = 'utf-8';
@@ -34,6 +35,7 @@ class PHPMailer_Library {
         if($email->send()){
             return TRUE;
         }else{
+            echo $email->ErrorInfo;
             return FALSE;
         }
     }

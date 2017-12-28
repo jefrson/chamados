@@ -82,7 +82,12 @@
                                     <?php endif; ?>
                                 </ul>
                             </li>
-                            <?php if($this->session->nivel == 0 || $this->session->nivel == 1): ?>
+                            <?php if($this->session->nivel == 1): ?>
+                                <li class="nav-item">
+                                    <a  class="nav-link" href="<?php echo site_url('cadastro_andamento');?>">Andamento</a>
+                                </li>
+                            <?php endif; ?>
+                            <?php if($this->session->nivel == 0): ?>
                                 <li class="nav-item dropdown">
                                     <a class="nav-link dropdown-toggle" id="menu_alt" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                         Andamento
@@ -91,11 +96,9 @@
                                         <li class="dropdown-item">
                                             <a class="nav-link" href="<?php echo site_url('cadastro_andamento'); ?>">Adicionar</a>
                                         </li>
-                                        <?php if($this->session->nivel == 0): ?>
-                                            <li class="dropdown-item">
-                                                <a class="nav-link" href="<?php echo site_url('alterar_andamento'); ?>">Alterar</a>
-                                            </li>
-                                        <?php endif; ?>
+                                        <li class="dropdown-item">
+                                            <a class="nav-link" href="<?php echo site_url('alterar_andamento'); ?>">Alterar</a>
+                                        </li>
                                     </ul>
                                 </li>
                             <?php endif; ?>
